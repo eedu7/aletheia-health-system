@@ -56,7 +56,6 @@ export const SignUpForm = () => {
 							<FormControl>
 								<Input placeholder="Full Name" {...field} />
 							</FormControl>
-							<FormMessage />
 						</FormItem>
 					)}
 				/>
