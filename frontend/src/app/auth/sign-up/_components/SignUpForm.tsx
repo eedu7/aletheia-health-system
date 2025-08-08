@@ -5,7 +5,7 @@ import { z } from "zod";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
 export const SignUpFormSchema = z.object({
@@ -33,15 +33,14 @@ export const SignUpForm = () => {
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 				<FormField
 					control={form.control}
 					name="fullName"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Full Name</FormLabel>
 							<FormControl>
-								<Input {...field} />
+								<Input placeholder="Full Name" {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -52,9 +51,8 @@ export const SignUpForm = () => {
 					name="email"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Email</FormLabel>
 							<FormControl>
-								<Input {...field} type="email" />
+								<Input placeholder="Email" {...field} type="email" />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -65,9 +63,8 @@ export const SignUpForm = () => {
 					name="password"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Password</FormLabel>
 							<FormControl>
-								<Input {...field} type="password" />
+								<Input placeholder="Password" {...field} type="password" />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -78,9 +75,8 @@ export const SignUpForm = () => {
 					name="confirmPassword"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Full Name</FormLabel>
 							<FormControl>
-								<Input {...field} type="password" />
+								<Input placeholder="Confirm Password" {...field} type="password" />
 							</FormControl>
 							<FormMessage />
 						</FormItem>

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function SignUpPage() {
 	return (
-		<Card className="min-w-[300px]">
+		<Card className="max-w-[400px] min-w-[300px]">
 			<CardHeader>
 				<CardTitle>Made for problem solvers</CardTitle>
 				<CardDescription>Keep thinking, solving, and bettering with Aletheia Health</CardDescription>
