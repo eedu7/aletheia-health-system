@@ -10,8 +10,8 @@
   "arrowParens": "always",
   "endOfLine": "lf",
   "plugins": [
-    "prettier-plugin-tailwindcss",
-    "@ianvs/prettier-plugin-sort-imports"
+    "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
   ],
   "importOrder": [
     "^(react|next)(.*)$",
