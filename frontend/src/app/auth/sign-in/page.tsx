@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import React from "react";
 import { AuthCardFooter } from "@/app/auth/_components/AuthCardFooter";
 import { AuthCardHeader } from "@/app/auth/_components/AuthCardHeader";
-import { SignInForm } from "@/app/auth/sign-in/_components/SignInForm";
+import { SignInForm } from "@/app/auth/_components/SignInForm";
 import { Card, CardContent } from "@/components/ui/card";
 
 export const metadata: Metadata = {

@@ -4,14 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { SignInFormSchema } from "@/app/auth/schemas";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-const SignInFormSchema = z.object({
-	email: z.email(),
-	password: z.string().min(6),
-});
 
 export const SignInForm = () => {
 	const form = useForm<z.infer<typeof SignInFormSchema>>({
