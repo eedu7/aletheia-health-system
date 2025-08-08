@@ -10,8 +10,11 @@ import { Input } from "@/components/ui/input";
 
 export const SignUpFormSchema = z
 	.object({
-		fullName: z.string().min(1, "Full name is required"),
-		email: z.email(),
+		fullName: z
+			.string()
+			.min(1, "Full name is required")
+			.regex(/^[A-Za-z\s]+$/, "Full name must contain only letters and spaces"),
+		email: z.email("Invalid email address"),
 		password: z
 			.string()
 			.min(6, "Password must be at least 6 characters")
