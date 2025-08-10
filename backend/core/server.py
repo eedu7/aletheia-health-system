@@ -1,9 +1,8 @@
+from fastapi import Depends, FastAPI
 from sqlalchemy import text
-from fastapi import FastAPI, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.database.session import get_async_session
-
 
 app = FastAPI()
 
