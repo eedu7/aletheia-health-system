@@ -14,7 +14,7 @@ class EnvironmentType(StrEnum):
 class BaseConfig(BaseSettings):
     class Config:
         case_sensitive = True
-        env_file = Path(__file__).parent.parent.parent / ".env"
+        env_file = Path(__file__).parent.parent / ".env"
         env_file_encoding = "utf-8"
 
 
@@ -24,3 +24,4 @@ class Config(BaseConfig):
 
 
 config: Config = Config()
+print(config.DATABASE_URL)
