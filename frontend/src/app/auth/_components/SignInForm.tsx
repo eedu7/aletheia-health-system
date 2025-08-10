@@ -2,16 +2,13 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { SignInFormSchema } from "@/app/auth/schemas";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-const SignInFormSchema = z.object({
-	email: z.email(),
-	password: z.string().min(6),
-});
 
 export const SignInForm = () => {
 	const form = useForm<z.infer<typeof SignInFormSchema>>({
@@ -57,6 +54,18 @@ export const SignInForm = () => {
 				<Button className="w-full" disabled={!form.formState.isValid}>
 					Sign In
 				</Button>
+				<div className="w-full text-center">
+					<p className="text-muted-foreground text-xs">
+						New User?{" "}
+						<Link
+							href="/auth/sign-up"
+							prefetch={false}
+							className="hover:text-primary font-bold hover:underline"
+						>
+							Sign Up
+						</Link>
+					</p>
+				</div>
 			</form>
 		</Form>
 	);
