@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { SignUpFormSchema } from "@/app/auth/schemas";
@@ -36,6 +37,7 @@ export const SignUpForm = () => {
 							<FormControl>
 								<Input placeholder="Full Name" {...field} />
 							</FormControl>
+							<FormMessage />
 						</FormItem>
 					)}
 				/>
@@ -78,6 +80,18 @@ export const SignUpForm = () => {
 				<Button className="w-full" disabled={!form.formState.isValid}>
 					Sign Up
 				</Button>
+				<div className="w-full text-center">
+					<p className="text-muted-foreground text-xs">
+						Already have an account?{" "}
+						<Link
+							href="/auth/sign-in"
+							prefetch={false}
+							className="hover:text-primary font-bold hover:underline"
+						>
+							Sign In
+						</Link>
+					</p>
+				</div>
 			</form>
 		</Form>
 	);

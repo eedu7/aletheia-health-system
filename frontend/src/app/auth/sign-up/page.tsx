@@ -15,7 +15,7 @@ export default function SignUpPage() {
 	return (
 		<Card className="max-w-[400px] min-w-[300px]">
 			<AuthCardHeader />
-			<CardContent>
+			<CardContent className="space-y-2">
 				<SignUpForm />
 			</CardContent>
 			<AuthCardFooter />
