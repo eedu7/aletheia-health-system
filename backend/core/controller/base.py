@@ -1,7 +1,7 @@
 from typing import Any, Dict, Generic, Type, TypeVar
 
-from app.repository import BaseRepository
 from core.database import Base
+from core.repository import BaseRepository
 
 ModelType = TypeVar("ModelType", bound=Base)
 
