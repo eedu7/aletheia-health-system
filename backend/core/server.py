@@ -1,13 +1,20 @@
-from fastapi import Depends, FastAPI
-from sqlalchemy import text
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import FastAPI
 
-from core.database.session import get_async_session
-
-app = FastAPI()
+from api import router
 
 
-@app.get("/")
-async def read_root(db: AsyncSession = Depends(get_async_session)):
-    result = await db.execute(text("SELECT 'Hello from Database!'"))
-    return {"message": result.scalar_one()}
+def init_routers(app: FastAPI) -> None:
+    app.include_router(router=router)
+
+
+def create_app() -> FastAPI:
+    app = FastAPI(
+        title="Aletheia Health System",
+        description="Aletheia Health System API",
+        version="0.0.1",
+    )
+    init_routers(app=app)
+    return app
+
+
+app: FastAPI = create_app()
