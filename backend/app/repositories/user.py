@@ -1,14 +1,16 @@
+from pydantic import EmailStr
+
 from app.models import User
 from core.repository import BaseRepository
 
 
 class UserRepository(BaseRepository[User]):
-    async def get_by_username(
-        self, username: str, join_: set[str] | None = None
+    async def get_by_full_name(
+        self, full_name: str, join_: set[str] | None = None
     ) -> User | None:
-        return await self.get_by("username", username, join_)
+        return await self.get_by("full_name", full_name, join_)
 
     async def get_by_email(
-        self, email: str, join_: set[str] | None = None
+        self, email: EmailStr, join_: set[str] | None = None
     ) -> User | None:
         return await self.get_by("email", email, join_)

@@ -17,26 +17,7 @@ class BaseController(Generic[ModelType]):
         self.model_class = model
         self.repository = repository
 
-    async def get_by_id(self, id_: int, join_: set[str] | None = None) -> ModelType:
-        """
-        Returns the model instance matching the id.
-
-        :param id_: The id to match.
-        :param join_: The joins to make.
-        :return: The model instance.
-        """
-
-        db_obj = await self.repository.get_by(
-            field="id", value=id_, join_=join_, unique=True
-        )
-        if not db_obj:
-            raise NotFoundException(
-                f"{self.model_class.__tablename__.title()} with id: {id} does not exist"
-            )
-
-        return db_obj
-
-    async def get_by_uuid(self, uuid: UUID, join_: set[str] | None = None) -> ModelType:
+    async def get_by_id(self, uuid: UUID, join_: set[str] | None = None) -> ModelType:
         """
         Returns the model instance matching the uuid.
 
