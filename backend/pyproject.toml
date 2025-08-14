@@ -18,5 +18,11 @@ dependencies = [
 [dependency-groups]
 dev = [
     "isort>=6.0.1",
+    "pre-commit>=4.3.0",
     "ruff>=0.12.8",
 ]
+
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["F401"]
