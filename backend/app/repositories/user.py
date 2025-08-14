@@ -13,4 +13,4 @@ class UserRepository(BaseRepository[User]):
     async def get_by_email(
         self, email: EmailStr, join_: set[str] | None = None
     ) -> User | None:
-        return await self.get_by("email", email, join_)
+        return await self.get_by("email", email, join_, unique=True)

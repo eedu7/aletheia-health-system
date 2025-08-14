@@ -3,7 +3,7 @@ from functools import partial
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.controllers.user import AuthController
+from app.controllers.auth import AuthController
 from app.models import User
 from app.repositories import UserRepository
 from core.database import get_async_session
