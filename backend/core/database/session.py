@@ -27,8 +27,8 @@ def reset_session_context(context: Token) -> None:
 
 
 engines = {
-    "writer": create_async_engine(config.POSTGRES_URL, pool_recycle=3600),
-    "reader": create_async_engine(config.POSTGRES_URL, pool_recycle=3600),
+    "writer": create_async_engine(str(config.DATABASE_URL), pool_recycle=3600),
+    "reader": create_async_engine(str(config.DATABASE_URL), pool_recycle=3600),
 }
 
 
@@ -51,7 +51,7 @@ session: Union[AsyncSession, async_scoped_session] = async_scoped_session(
 )
 
 
-async def get_session():
+async def get_async_session():
     """
     Get the database session.
     This can be used for dependency injection.
