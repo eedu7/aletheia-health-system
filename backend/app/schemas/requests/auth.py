@@ -22,11 +22,13 @@ class LoginUserRequest(BaseModel):
 
 
 class RegisterUserRequest(LoginUserRequest):
-    username: str
+    full_name: str
 
     @classmethod
-    @field_validator("username")
+    @field_validator("full_name")
     def validate_username(cls, v: str) -> str:
         if re.search(r"[^a-zA-Z0-9]", v):
-            raise ValueError("Username must not contain special characters")
+            raise ValueError(
+                "Full name must not contain special characters (except spaces)"
+            )
         return v
