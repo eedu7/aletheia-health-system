@@ -21,6 +21,10 @@ class BaseConfig(BaseSettings):
 class Config(BaseConfig):
     ENVIRONMENT: str = EnvironmentType.DEVELOPMENT
     DATABASE_URL: PostgresDsn = "postgresql+asyncpg://postgres:postgres@localhost:5432/aletheia-health-system-db"
+    JWT_SECRET_KEY: str = "super-secret-key"
+    JWT_ALGORITHM: str = "HS256"
+    JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
+    JWT_REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7
 
 
 config: Config = Config()
