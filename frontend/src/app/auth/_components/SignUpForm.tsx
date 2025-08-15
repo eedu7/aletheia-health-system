@@ -35,10 +35,16 @@ export const SignUpForm = () => {
 	const onSubmit = (data: z.infer<typeof SignUpFormSchema>) => {
 		signUp.mutate(data);
 	};
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
+		if (event.key === "Enter") {
+			event.preventDefault();
+			form.handleSubmit(onSubmit)();
+		}
+	};
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+			<form onSubmit={form.handleSubmit(onSubmit)} onKeyDown={handleKeyDown} className="space-y-4">
 				<FormField
 					control={form.control}
 					name="fullName"
