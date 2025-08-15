@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import { z } from "zod";
 import Link from "next/link";
 import React from "react";
@@ -9,6 +10,7 @@ import { SignUpFormSchema } from "@/app/auth/schemas";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/api/useAuth";
 
 export const SignUpForm = () => {
 	const form = useForm<z.infer<typeof SignUpFormSchema>>({
@@ -22,8 +24,10 @@ export const SignUpForm = () => {
 		mode: "all",
 	});
 
+	const { signUp } = useAuth();
+
 	const onSubmit = (data: z.infer<typeof SignUpFormSchema>) => {
-		alert(JSON.stringify(data, null, 2));
+		signUp.mutate(data);
 	};
 
 	return (
@@ -77,8 +81,14 @@ export const SignUpForm = () => {
 						</FormItem>
 					)}
 				/>
-				<Button className="w-full" disabled={!form.formState.isValid}>
-					Sign Up
+				<Button className="w-full" disabled={!form.formState.isValid || signUp.isPending}>
+					{signUp.isPending ? (
+						<span className="loading loading-spinner loading-sm space-x-2">
+							<Loader2 /> Signing...
+						</span>
+					) : (
+						<span>Sign Up</span>
+					)}
 				</Button>
 				<div className="w-full text-center">
 					<p className="text-muted-foreground text-xs">

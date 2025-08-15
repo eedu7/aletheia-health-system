@@ -4,15 +4,15 @@ import { SignUpFormSchema } from "@/app/auth/schemas";
 import { registerUser } from "@/lib/api/auth";
 
 export function useAuth() {
-	const register = useMutation({
+	const signUp = useMutation({
 		mutationKey: ["register"],
 		mutationFn: (data: z.infer<typeof SignUpFormSchema>) => registerUser(data),
 	});
 
-	const login = () => {};
+	const signIn = () => {};
 
 	return {
-		register,
-		login,
+		signIn,
+		signUp,
 	};
 }
