@@ -22,7 +22,7 @@ export const SignUpForm = () => {
 			password: "",
 			confirmPassword: "",
 		},
-		mode: "all",
+		mode: "onBlur",
 	});
 
 	const { signUp } = useAuth();
