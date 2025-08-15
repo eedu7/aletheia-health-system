@@ -5,6 +5,7 @@ import { z } from "zod";
 import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { PasswordInputField } from "@/app/auth/_components/PasswordInputField";
 import { SignInFormSchema } from "@/app/auth/schemas";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
@@ -19,6 +20,12 @@ export const SignInForm = () => {
 		},
 		mode: "onSubmit",
 	});
+
+	const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+
+	const togglePasswordVisibility = () => {
+		setIsPasswordVisible((prev) => !prev);
+	};
 
 	const onSubmit = (data: z.infer<typeof SignInFormSchema>) => {
 		alert(JSON.stringify(data, null, 2));
@@ -45,7 +52,12 @@ export const SignInForm = () => {
 					render={({ field }) => (
 						<FormItem>
 							<FormControl>
-								<Input placeholder="Password" {...field} type="password" />
+								<PasswordInputField
+									isVisible={isPasswordVisible}
+									onToggleVisibility={togglePasswordVisibility}
+									placeholder="Password"
+									{...field}
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>
