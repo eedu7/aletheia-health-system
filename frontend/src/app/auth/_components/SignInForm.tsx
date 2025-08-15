@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import { z } from "zod";
 import Link from "next/link";
 import React from "react";
@@ -10,6 +11,7 @@ import { SignInFormSchema } from "@/app/auth/schemas";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/api/useAuth";
 
 export const SignInForm = () => {
 	const form = useForm<z.infer<typeof SignInFormSchema>>({
@@ -21,6 +23,7 @@ export const SignInForm = () => {
 		mode: "onSubmit",
 	});
 
+	const { signIn } = useAuth();
 	const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
 	const togglePasswordVisibility = () => {
@@ -28,7 +31,7 @@ export const SignInForm = () => {
 	};
 
 	const onSubmit = (data: z.infer<typeof SignInFormSchema>) => {
-		alert(JSON.stringify(data, null, 2));
+		signIn.mutate(data);
 	};
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
@@ -70,8 +73,14 @@ export const SignInForm = () => {
 						</FormItem>
 					)}
 				/>
-				<Button className="w-full" disabled={!form.formState.isValid}>
-					Sign In
+				<Button className="w-full" disabled={!form.formState.isValid || signIn.isPending}>
+					{signIn.isPending ? (
+						<span className="loading loading-spinner loading-sm flex items-center gap-2">
+							<Loader2 /> Signing...
+						</span>
+					) : (
+						<span>Sign In</span>
+					)}
 				</Button>
 				<div className="w-full text-center">
 					<p className="text-muted-foreground text-xs">
