@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status
 
 from app.controllers import AuthController
 from app.schemas.requests.auth import LoginUserRequest, RegisterUserRequest
-from app.schemas.responses.auth import RegisterUserResponse
+from app.schemas.responses.auth import AuthResponse
 from core.factory import Factory
 
 router = APIRouter()
@@ -13,7 +13,7 @@ router = APIRouter()
 async def register_user(
     register_user_request: RegisterUserRequest,
     auth_controller: AuthController = Depends(Factory().get_auth_controller),
-) -> RegisterUserResponse:
+) -> AuthResponse:
     return await auth_controller.register(
         email=register_user_request.email,
         password=register_user_request.password,
@@ -25,7 +25,7 @@ async def register_user(
 async def login(
     login_user_request: LoginUserRequest,
     auth_controller: AuthController = Depends(Factory().get_auth_controller),
-):
+) -> AuthResponse:
     return await auth_controller.login(
         email=login_user_request.email, password=login_user_request.password
     )

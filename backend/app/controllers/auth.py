@@ -2,7 +2,7 @@ from pydantic import EmailStr
 
 from app.models import User
 from app.repositories import UserRepository
-from app.schemas.extra import Token
+from app.schemas.responses.auth import AuthResponse
 from core.controller import BaseController
 from core.exceptions import BadRequestException
 from core.security import JWTHandler, PasswordHandler
@@ -13,7 +13,9 @@ class AuthController(BaseController[User]):
         super().__init__(model=User, repository=user_repository)
         self.user_repository = user_repository
 
-    async def register(self, email: EmailStr, password: str, full_name: str) -> User:
+    async def register(
+        self, email: EmailStr, password: str, full_name: str
+    ) -> AuthResponse:
         user: User | None = await self.user_repository.get_by_email(email)
 
         if user:
@@ -21,31 +23,24 @@ class AuthController(BaseController[User]):
 
         hashed_password = PasswordHandler.hash_password(password)
 
-        return await self.create(
+        new_user: User = await self.create(
             {
                 "email": email,
                 "password": hashed_password,
                 "full_name": full_name,
             }
         )
+        token = JWTHandler.create_token(new_user)
 
-    async def login(self, email: EmailStr, password: str) -> Token:
+        return AuthResponse(user=new_user, token=token)
+
+    async def login(self, email: EmailStr, password: str) -> AuthResponse:
         user: User | None = await self.user_repository.get_by_email(email)
 
         if not user or not PasswordHandler.verify_password(
             password=password, hashed_password=str(user.password)
         ):
             raise BadRequestException("Invalid credentials.")
+        token = JWTHandler.create_token(user)
 
-        payload = {
-            "id": str(user.id),
-            "email": str(user.email),
-            "full_name": str(user.full_name),
-            "token_type": "access",
-        }
-        access_token = JWTHandler.encode(payload=payload)
-
-        payload["token_type"] = "refresh"
-        refresh_token = JWTHandler.encode(payload=payload, token_type="refresh")
-
-        return Token(access_token=access_token, refresh_token=refresh_token)
+        return AuthResponse(user=user, token=token)

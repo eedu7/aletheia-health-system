@@ -3,6 +3,8 @@ from typing import Any, Dict, Literal
 
 from jose import ExpiredSignatureError, JWTError, jwt
 
+from app.models import User
+from app.schemas.extra import Token
 from core.config import config
 from core.exceptions import CustomException
 from core.utils import get_timestamp
@@ -53,3 +55,14 @@ class JWTHandler:
             raise JWTExpiredError() from e
         except JWTError as e:
             raise JWTDecodeError() from e
+
+    @classmethod
+    def create_token(cls, user: User) -> Token:
+        payload = {
+            "id": str(user.id),
+            "email": user.email,
+            "full_name": user.full_name,
+        }
+        access_token = cls.encode(payload=payload, token_type="access")
+        refresh_token = cls.encode(payload=payload, token_type="refresh")
+        return Token(access_token=access_token, refresh_token=refresh_token)
