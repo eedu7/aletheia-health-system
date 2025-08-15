@@ -6,6 +6,7 @@ import { z } from "zod";
 import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { PasswordInputField } from "@/app/auth/_components/PasswordInputField";
 import { SignUpFormSchema } from "@/app/auth/schemas";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
@@ -25,6 +26,11 @@ export const SignUpForm = () => {
 	});
 
 	const { signUp } = useAuth();
+	const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+
+	const togglePasswordVisibility = () => {
+		setIsPasswordVisible((prev) => !prev);
+	};
 
 	const onSubmit = (data: z.infer<typeof SignUpFormSchema>) => {
 		signUp.mutate(data);
@@ -63,7 +69,12 @@ export const SignUpForm = () => {
 					render={({ field }) => (
 						<FormItem>
 							<FormControl>
-								<Input placeholder="Password" {...field} type="password" />
+								<PasswordInputField
+									isVisible={isPasswordVisible}
+									onToggleVisibility={togglePasswordVisibility}
+									{...field}
+									placeholder="Password"
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -75,7 +86,11 @@ export const SignUpForm = () => {
 					render={({ field }) => (
 						<FormItem>
 							<FormControl>
-								<Input placeholder="Confirm Password" {...field} type="password" />
+								<Input
+									{...field}
+									type={isPasswordVisible ? "text" : "password"}
+									placeholder="Confirm Password"
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -83,7 +98,7 @@ export const SignUpForm = () => {
 				/>
 				<Button className="w-full" disabled={!form.formState.isValid || signUp.isPending}>
 					{signUp.isPending ? (
-						<span className="loading loading-spinner loading-sm space-x-2">
+						<span className="loading loading-spinner loading-sm flex items-center gap-2">
 							<Loader2 /> Signing...
 						</span>
 					) : (
