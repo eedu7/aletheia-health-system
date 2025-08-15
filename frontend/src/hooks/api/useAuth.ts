@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
-import { SignUpFormSchema } from "@/app/auth/schemas";
-import { registerUser } from "@/lib/api/auth";
+import { SignInFormSchema, SignUpFormSchema } from "@/app/auth/schemas";
+import { loginUser, registerUser } from "@/lib/api/auth";
 
 export function useAuth() {
 	const signUp = useMutation({
@@ -9,7 +9,10 @@ export function useAuth() {
 		mutationFn: (data: z.infer<typeof SignUpFormSchema>) => registerUser(data),
 	});
 
-	const signIn = () => {};
+	const signIn = useMutation({
+		mutationKey: ["login"],
+		mutationFn: (data: z.infer<typeof SignInFormSchema>) => loginUser(data),
+	});
 
 	return {
 		signIn,
