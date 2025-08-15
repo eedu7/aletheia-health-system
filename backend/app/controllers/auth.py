@@ -3,6 +3,7 @@ from pydantic import EmailStr
 from app.models import User
 from app.repositories import UserRepository
 from app.schemas.responses.auth import AuthResponse
+from app.schemas.responses.user import UserResponse
 from core.controller import BaseController
 from core.exceptions import BadRequestException
 from core.security import JWTHandler, PasswordHandler
@@ -32,7 +33,7 @@ class AuthController(BaseController[User]):
         )
         token = JWTHandler.create_token(new_user)
 
-        return AuthResponse(user=new_user, token=token)
+        return AuthResponse(user=UserResponse.model_validate(new_user), token=token)
 
     async def login(self, email: EmailStr, password: str) -> AuthResponse:
         user: User | None = await self.user_repository.get_by_email(email)
@@ -42,5 +43,4 @@ class AuthController(BaseController[User]):
         ):
             raise BadRequestException("Invalid credentials.")
         token = JWTHandler.create_token(user)
-
-        return AuthResponse(user=user, token=token)
+        return AuthResponse(user=UserResponse.model_validate(user), token=token)

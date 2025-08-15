@@ -27,7 +27,7 @@ class BaseController(Generic[ModelType]):
         """
 
         db_obj = await self.repository.get_by(
-            field="uuid", value=uuid, join_=join_, unique=True
+            field="id", value=uuid, join_=join_, unique=True
         )
         if not db_obj:
             raise NotFoundException(
