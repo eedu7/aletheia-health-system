@@ -27,8 +27,8 @@ def main() -> None:
         "--host",
         "-H",
         type=str,
-        default="0.0.0.0",
-        help="Host to run the server on (default: 0.0.0.0).",
+        default="127.0.0.1",
+        help="Host to run the server on (default: 127.0.0.1).",
     )
 
     args = parser.parse_args()

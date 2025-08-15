@@ -55,7 +55,8 @@ class BaseRepository(Generic[ModelType]):
         value: Any,
         join_: set[str] | None = None,
         unique: bool = False,
-    ) -> ModelType:
+        or_none: bool = False,
+    ) -> ModelType | None:
         """
         Returns the model instance matching the field and value.
 
@@ -70,6 +71,8 @@ class BaseRepository(Generic[ModelType]):
         if join_ is not None:
             return await self.all_unique(query)
         if unique:
+            if or_none:
+                return await self._one_or_none(query)
             return await self._one(query)
 
         return await self._all(query)
