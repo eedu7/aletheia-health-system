@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { z } from "zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { PasswordInputField } from "@/app/auth/_components/PasswordInputField";
@@ -22,10 +23,11 @@ export const SignUpForm = () => {
 			password: "",
 			confirmPassword: "",
 		},
-		mode: "onBlur",
+		mode: "onSubmit",
 	});
 
 	const { signUp } = useAuth();
+	const router = useRouter();
 	const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
 	const togglePasswordVisibility = () => {
@@ -33,10 +35,14 @@ export const SignUpForm = () => {
 	};
 
 	const onSubmit = (data: z.infer<typeof SignUpFormSchema>) => {
-		signUp.mutate(data);
+		signUp.mutate(data, {
+			onSuccess: () => {
+				router.push("/");
+			},
+		});
 	};
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
-		if (event.key === "Enter") {
+		if (event.ctrlKey && event.key === "Enter") {
 			event.preventDefault();
 			form.handleSubmit(onSubmit)();
 		}
@@ -102,7 +108,7 @@ export const SignUpForm = () => {
 						</FormItem>
 					)}
 				/>
-				<Button className="w-full" disabled={!form.formState.isValid || signUp.isPending}>
+				<Button className="w-full" disabled={signUp.isPending}>
 					{signUp.isPending ? (
 						<span className="loading loading-spinner loading-sm flex items-center gap-2">
 							<Loader2 /> Signing...
