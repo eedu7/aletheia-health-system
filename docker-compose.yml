@@ -10,5 +10,14 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  postgresql-test:
+    image: postgres:17.5-alpine3.22
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: aletheia-health-system-test-db
+    ports:
+      - "5434:5434"
+
 volumes:
   pgdata:
