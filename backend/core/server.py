@@ -1,4 +1,3 @@
-from http import HTTPStatus
 from typing import List
 
 from fastapi import FastAPI, Request
@@ -34,7 +33,9 @@ def make_middleware() -> List[Middleware]:
             allow_headers=["*"],
         ),
         Middleware(SQLAlchemyMiddleware),
-        Middleware(AuthenticationMiddleware, backend=AuthBackend(), on_error=on_auth_error),
+        Middleware(
+            AuthenticationMiddleware, backend=AuthBackend(), on_error=on_auth_error
+        ),
     ]
 
 
