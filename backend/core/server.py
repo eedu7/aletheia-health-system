@@ -1,9 +1,9 @@
 from typing import List
 
 from fastapi import FastAPI, Request
-from fastapi.responses import  JSONResponse
 from fastapi.middleware import Middleware
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from api import router
 from core.exceptions import CustomException
@@ -12,6 +12,7 @@ from core.middlewares import AuthBackend, AuthenticationMiddleware, SQLAlchemyMi
 
 def init_routers(app: FastAPI) -> None:
     app.include_router(router=router)
+
 
 def init_listeners(app: FastAPI) -> None:
     @app.exception_handler(CustomException)
