@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from typing import List
 
 from fastapi import FastAPI, Request
@@ -16,7 +17,7 @@ def init_routers(app: FastAPI) -> None:
 
 def init_listeners(app: FastAPI) -> None:
     @app.exception_handler(CustomException)
-    async def custom_exception_handler(request: Request, exc: CustomException):
+    async def custom_exception_handler(_: Request, exc: CustomException):
         return JSONResponse(
             status_code=exc.code,
             content={"error": exc.error_code, "message": exc.message},
@@ -33,7 +34,7 @@ def make_middleware() -> List[Middleware]:
             allow_headers=["*"],
         ),
         Middleware(SQLAlchemyMiddleware),
-        Middleware(AuthenticationMiddleware, backend=AuthBackend()),
+        Middleware(AuthenticationMiddleware, backend=AuthBackend(), on_error=on_auth_error),
     ]
 
 
