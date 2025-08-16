@@ -1,5 +1,6 @@
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.controllers import AuthController, UserController
 from app.models import User
 from app.repositories import UserRepository
