@@ -1,18 +1,27 @@
 from fastapi import Depends
-from core.database import get_async_session
 from sqlalchemy.ext.asyncio import AsyncSession
-
-from .user import UserFactory
-from .auth import AuthFactory
+from app.controllers import AuthController, UserController
+from app.models import User
+from app.repositories import UserRepository
+from core.database import get_async_session
 
 
 class Factory:
-    def __init__(self):
-        self.user = UserFactory()
-        self.auth = AuthFactory()
+    # ====================
+    # Repositories
+    # ====================
+    def get_user_repository(self, db_session: AsyncSession):
+        return UserRepository(User, db_session)
 
-    def get_user_controller(self, db_session: AsyncSession = Depends(get_async_session)):
-        return self.user.get_controller(db_session)
+    # ====================
+    # Controllers
+    # ====================
+    def get_auth_controller(
+        self, db_session: AsyncSession = Depends(get_async_session)
+    ):
+        return AuthController(user_repository=self.get_user_repository(db_session))
 
-    def get_auth_controller(self, db_session: AsyncSession = Depends(get_async_session)):
-        return self.auth.get_controller(db_session)
+    def get_user_controller(
+        self, db_session: AsyncSession = Depends(get_async_session)
+    ):
+        return UserController(user_repository=self.get_user_repository(db_session))
