@@ -23,7 +23,7 @@ class User(Base, TimestampMixin):
     )
     password: Mapped[str] = mapped_column(Unicode(255), nullable=False)
 
-    conversations: Mapped[List["Conversation"]] = relationship(back_populates="user")
+    conversations: Mapped[List["Conversation"]] = relationship(back_populates="user")  # type: ignore
 
     def __repr__(self):
         return f"ID: {self.id}, email: {self.email}, full: {self.full_name}"
