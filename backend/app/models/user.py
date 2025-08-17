@@ -1,8 +1,11 @@
+from __future__ import annotations
+
+from typing import List
 from uuid import uuid4
 
 from sqlalchemy import Unicode
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from core.database import Base
 from core.database.mixins import TimestampMixin
@@ -20,5 +23,7 @@ class User(Base, TimestampMixin):
     )
     password: Mapped[str] = mapped_column(Unicode(255), nullable=False)
 
-    def __str__(self):
-        return f"UUID: {self.id}, email: {self.email}, full: {self.full_name}"
+    conversations: Mapped[List["Conversation"]] = relationship(back_populates="user")
+
+    def __repr__(self):
+        return f"ID: {self.id}, email: {self.email}, full: {self.full_name}"
