@@ -5,7 +5,7 @@ from core.repository import BaseRepository
 
 
 class MessageRepository(BaseRepository[Message]):
-    async def get_by_conversation(
+    async def get_by_conversation_id(
         self, conversation_id: str, join_: set[str] | None = None
     ) -> List[Message]:
         return await self.get_by("conversation_id", conversation_id, join_)
