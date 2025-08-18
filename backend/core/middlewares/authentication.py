@@ -7,24 +7,24 @@ from starlette.middleware.authentication import (
 )
 from starlette.requests import HTTPConnection
 
-from app.schemas.extra import CurrentUser
+from app.schemas.extra import CurrentUser, TokenType
 from core.security import JWTHandler
 
 
 class AuthBackend(AuthenticationBackend):
     async def authenticate(self, conn: HTTPConnection) -> Tuple[bool, CurrentUser]:
-        current_user = CurrentUser()
+        current_user = CurrentUser()  # type: ignore
         authorization: str = conn.headers.get("Authorization")
-
-        if not authorization:
-            return False, current_user
 
         try:
             scheme, token = authorization.split(" ")
             if scheme.lower() != "bearer":
-                return False, current_user
+                token = None
         except ValueError:
-            return False, current_user
+            token = None
+
+        if not token:
+            token = conn.cookies.get(TokenType.ACCESS_TOKEN)
 
         if not token:
             return False, current_user
@@ -32,9 +32,9 @@ class AuthBackend(AuthenticationBackend):
         try:
             payload = JWTHandler.decode(token)
             current_user.id = payload.get("sub")
+            return True, current_user
         except JWTError:
             return False, current_user
-        return True, current_user
 
 
 class AuthenticationMiddleware(BaseAuthenticationMiddleware):
