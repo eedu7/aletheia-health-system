@@ -38,6 +38,11 @@ class ConversationController(BaseController[Conversation]):
         except Exception as exception:
             raise BadRequestException("Error in create conversation: " + str(exception))
 
+    async def get_conversation_by_id(
+        self, conversation_id: UUID
+    ) -> Conversation | None:
+        return await self.get_by_id(conversation_id)
+
     async def get_by_user(self, user_id: str) -> List[Conversation]:
         return await self.conversation_repository.get_by_user(user_id)
 
