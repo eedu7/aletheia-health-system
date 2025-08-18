@@ -22,7 +22,7 @@ async def create_message(
         return await message_controller.create_message(
             message_request_data.conversation_id,
             message_request_data.content,
-            OllamaClient()
+            OllamaClient(),
         )
     except Exception as e:
         raise BadRequestException(f"Error: {e}")
