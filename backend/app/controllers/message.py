@@ -1,6 +1,7 @@
 from typing import List
 from uuid import UUID
 
+from app.integrations.ollama_client import OllamaClient
 from app.models import Message
 from app.repositories import MessageRepository
 from app.schemas.responses.message import MessageResponse
@@ -23,6 +24,11 @@ class MessageController(BaseController[Message]):
             }
         )
         return MessageResponse.model_validate(message)
+
+    async def create_with_ai_response(
+        self, conversation_id: UUID, user_content: str, ollama_client: OllamaClient
+    ):
+        pass
 
     async def get_by_conversation_id(self, conversation_id: str) -> List[Message]:
         return await self.message_repository.get_by_conversation_id(conversation_id)
