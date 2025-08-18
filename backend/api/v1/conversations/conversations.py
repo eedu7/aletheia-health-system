@@ -1,10 +1,24 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
+from app.controllers import ConversationController
 from app.schemas.requests.conversation import ConversationCreateRequest
+from app.schemas.responses.conversation import ConversationResponse
+from core.dependencies import AuthenticationRequired
+from core.factory import Factory
 
-router = APIRouter()
+router = APIRouter(
+    dependencies=[Depends(AuthenticationRequired)],
+)
 
 
-@router.post("/conversations")
-async def create_conversation(conversation_request_data: ConversationCreateRequest):
-    return {"message": "Create conversation", "data": conversation_request_data}
+@router.post("/", response_model=ConversationResponse)
+async def create_conversation(
+    conversation_request_data: ConversationCreateRequest,
+    conversation_controller: ConversationController = Depends(
+        Factory().get_conversation_controller
+    ),
+) -> ConversationResponse:
+    return await conversation_controller.create_conversation(
+        user_id=conversation_request_data.user_id,
+        title=conversation_request_data.title,
+    )

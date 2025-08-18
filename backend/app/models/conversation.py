@@ -26,7 +26,7 @@ class Conversation(Base, TimestampMixin):
 
     user: Mapped["User"] = relationship(back_populates="conversations")  # type: ignore
     messages: Mapped[list["Message"]] = relationship(  # type: ignore
-        back_populates="conversations", cascade="all, delete-orphan", lazy="selectin"
+        back_populates="conversation", cascade="all, delete-orphan", lazy="selectin"
     )  # type: ignore
 
     def __repr__(self):
