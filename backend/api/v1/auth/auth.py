@@ -1,6 +1,7 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, Response, status
 
 from app.controllers import AuthController
+from app.schemas.extra import TokenType
 from app.schemas.requests.auth import LoginUserRequest, RegisterUserRequest
 from app.schemas.responses.auth import AuthResponse
 from core.factory import Factory
@@ -24,11 +25,22 @@ async def register_user(
 @router.post("/login", status_code=status.HTTP_200_OK)
 async def login(
     login_user_request: LoginUserRequest,
+    response: Response,
     auth_controller: AuthController = Depends(Factory().get_auth_controller),
 ) -> AuthResponse:
-    return await auth_controller.login(
+    auth_model = await auth_controller.login(
         email=login_user_request.email, password=login_user_request.password
     )
+
+    token = auth_model.token
+    response.set_cookie(
+        key=TokenType.ACCESS_TOKEN, value=token.access_token, httponly=True
+    )
+    response.set_cookie(
+        key=TokenType.REFRESH_TOKEN, value=token.refresh_token, httponly=True
+    )
+
+    return auth_model
 
 
 @router.post("/social/google")
