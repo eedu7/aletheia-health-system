@@ -1,20 +1,14 @@
 from __future__ import annotations
 
-from enum import StrEnum
 from uuid import uuid4
 
 from sqlalchemy import Enum, ForeignKey, UnicodeText
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from app.schemas.extra import SenderType
 from core.database import Base
 from core.database.mixins import TimestampMixin
-
-
-class SenderType(StrEnum):
-    USER = "user"
-    ASSISTANT = "assistant"
-    SYSTEM = "system"
 
 
 class Message(Base, TimestampMixin):
