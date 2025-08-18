@@ -17,8 +17,11 @@ class AuthBackend(AuthenticationBackend):
         authorization: str = conn.headers.get("Authorization")
 
         try:
-            scheme, token = authorization.split(" ")
-            if scheme.lower() != "bearer":
+            if authorization:
+                scheme, token = authorization.split(" ")
+                if scheme.lower() != "bearer":
+                    token = None
+            else:
                 token = None
         except ValueError:
             token = None
