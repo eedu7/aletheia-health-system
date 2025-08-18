@@ -9,7 +9,7 @@ from app.schemas.extra import SenderType
 class MessageResponse(BaseModel):
     id: UUID
     conversation_id: UUID
-    sender_type: SenderType
+    sender: SenderType
     content: str
     created_at: datetime
 

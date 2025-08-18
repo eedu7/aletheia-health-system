@@ -4,6 +4,7 @@ from uuid import UUID
 from app.integrations.ollama_client import OllamaClient
 from app.models import Message
 from app.repositories import MessageRepository
+from app.schemas.extra import SenderType
 from app.schemas.responses.message import MessageResponse
 from core.controller import BaseController
 
@@ -14,21 +15,26 @@ class MessageController(BaseController[Message]):
         self.message_repository = message_repository
 
     async def create_message(
-        self, conversation_id: UUID, sender: str, content: str
+        self, conversation_id: UUID, content: str, ollama_client: OllamaClient
     ) -> MessageResponse:
-        message: Message = await self.create(
+        await self.create(
             {
                 "conversation_id": conversation_id,
-                "sender": sender,
+                "sender": SenderType.USER.value,
                 "content": content,
             }
         )
-        return MessageResponse.model_validate(message)
 
-    async def create_with_ai_response(
-        self, conversation_id: UUID, user_content: str, ollama_client: OllamaClient
-    ):
-        pass
+        ai_reply_text = await ollama_client.generate(content)
+        ai_message: Message = await self.create(
+            {
+                "conversation_id": conversation_id,
+                "sender": SenderType.ASSISTANT.value,
+                "content": ai_reply_text,
+            }
+        )
+
+        return MessageResponse.model_validate(ai_message)
 
     async def get_by_conversation_id(self, conversation_id: str) -> List[Message]:
         return await self.message_repository.get_by_conversation_id(conversation_id)

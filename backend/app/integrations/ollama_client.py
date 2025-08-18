@@ -10,6 +10,7 @@ class OllamaClient:
         prompt: str,
         model: str = "llama2",
     ) -> str:
+        return f" Response from Ollama model '{model}' for prompt '{prompt}'"
         async with httpx.AsyncClient() as client:
             response = await client.post(
                 f"{self.url}/api/generate",
