@@ -1,4 +1,4 @@
-"""Added the conversation model
+"""Added the conversations model
 
 Revision ID: b6f04897ea16
 Revises: e9caf7fc36f1
