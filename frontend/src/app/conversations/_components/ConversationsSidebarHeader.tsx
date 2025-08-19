@@ -1,3 +1,5 @@
+"use client";
+
 import { PanelLeftIcon } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import React from "react";
@@ -23,10 +25,10 @@ export const ConversationsSidebarHeader = ({ open, toggleSidebar }: Conversation
 						{open && (
 							<SidebarMenuItem>
 								<motion.div
-									initial={{ opacity: 0, x: -10 }}
-									animate={{ opacity: 1, x: 0 }}
-									exit={{ opacity: 0, x: -10 }}
-									transition={{ duration: 0.2 }}
+									initial={{ opacity: 0, x: -10, y: -10 }}
+									animate={{ opacity: 1, x: 0, y: 0 }}
+									exit={{ opacity: 0, x: -10, y: -10 }}
+									transition={{ duration: 0.175 }}
 								>
 									<SidebarMenuButton className="cursor-pointer">
 										<span>Aletheia Ai</span>
