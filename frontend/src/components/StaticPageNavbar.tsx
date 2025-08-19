@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { StaticPageNavbarAvatar } from "@/components/StaticPageNavbarAvatar";
 import {
 	NavigationMenu,
 	NavigationMenuItem,
@@ -15,18 +15,11 @@ import { cn } from "@/lib/utils";
 
 export const StaticPageNavbar = () => {
 	const { user } = useUserApi();
-	const isAuthenticated = !!user;
-	const { data } = user;
 	return (
 		<NavigationMenu>
 			<NavigationMenuList>
-				{isAuthenticated ? (
-					<NavigationMenuItem>
-						<Avatar>
-							<AvatarImage src="https://github.com/shadcn.png" />
-							<AvatarFallback className="text-xs">{data?.fullName}</AvatarFallback>
-						</Avatar>
-					</NavigationMenuItem>
+				{user.isSuccess ? (
+					<StaticPageNavbarAvatar fullName={user.data.fullName} />
 				) : (
 					<>
 						<NavigationMenuItem>

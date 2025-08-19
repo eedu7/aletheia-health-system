@@ -6,7 +6,7 @@ export const StaticPageHeader = () => {
 	return (
 		<div className="bg-[#FFFAFA] shadow">
 			<header className="mx-auto flex max-w-7xl items-center justify-between p-4">
-				<Link href="/public" className="text-xl font-bold">
+				<Link href="/" className="text-xl font-bold">
 					Aletheia AI
 				</Link>
 				<StaticPageNavbar />
