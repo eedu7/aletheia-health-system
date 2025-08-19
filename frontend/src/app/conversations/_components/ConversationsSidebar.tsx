@@ -15,11 +15,11 @@ import {
 } from "@/components/ui/sidebar";
 
 export const ConversationsSidebar = () => {
-	const { open } = useSidebar();
+	const { open, toggleSidebar } = useSidebar();
 	return (
 		<Sidebar collapsible="icon">
 			<SidebarContent>
-				<ConversationsSidebarHeader open={open} />
+				<ConversationsSidebarHeader open={open} toggleSidebar={toggleSidebar} />
 				<SidebarGroup>
 					<SidebarGroupContent>
 						<SidebarMenu>

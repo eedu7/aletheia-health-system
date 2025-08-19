@@ -7,25 +7,28 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
 
 interface ConversationsSidebarHeaderProps {
 	open: boolean;
+	toggleSidebar: () => void;
 }
 
-export const ConversationsSidebarHeader = ({ open }: ConversationsSidebarHeaderProps) => {
+export const ConversationsSidebarHeader = ({ open, toggleSidebar }: ConversationsSidebarHeaderProps) => {
 	return (
 		<SidebarGroup>
 			<SidebarGroupContent>
-				<SidebarMenu className="flex flex-row items-center justify-between">
+				<SidebarMenu className={cn("flex flex-row items-center justify-between", !open && "flex-col")}>
 					{open && (
 						<SidebarMenuItem>
-							<SidebarMenuButton>
+							<SidebarMenuButton className="cursor-pointer">
 								<span>Aletheia Ai</span>
 							</SidebarMenuButton>
 						</SidebarMenuItem>
 					)}
+
 					<SidebarMenuItem>
-						<SidebarMenuButton>
+						<SidebarMenuButton onClick={toggleSidebar} className="cursor-pointer">
 							<PanelLeftIcon />
 						</SidebarMenuButton>
 					</SidebarMenuItem>
