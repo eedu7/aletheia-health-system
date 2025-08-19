@@ -10,10 +10,13 @@ import {
 	NavigationMenuList,
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { useUserApi } from "@/hooks/api/useUserApi";
 import { cn } from "@/lib/utils";
 
 export const StaticPageNavbar = () => {
-	const isAuthenticated = false;
+	const { user } = useUserApi();
+	const isAuthenticated = !!user;
+	const { data } = user;
 	return (
 		<NavigationMenu>
 			<NavigationMenuList>
@@ -21,7 +24,7 @@ export const StaticPageNavbar = () => {
 					<NavigationMenuItem>
 						<Avatar>
 							<AvatarImage src="https://github.com/shadcn.png" />
-							<AvatarFallback>CN</AvatarFallback>
+							<AvatarFallback className="text-xs">{data?.fullName}</AvatarFallback>
 						</Avatar>
 					</NavigationMenuItem>
 				) : (

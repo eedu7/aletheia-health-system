@@ -7,6 +7,6 @@ type UserProfile = {
 };
 
 export async function getUserProfile() {
-	const res = await api.get<UserProfile>("/v1/user");
+	const res = await api.get<UserProfile>("/v1/user/profile");
 	return res.data;
 }

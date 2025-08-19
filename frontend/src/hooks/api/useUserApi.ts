@@ -3,7 +3,7 @@ import { getUserProfile } from "@/lib/api/user";
 
 export function useUserApi() {
 	const user = useQuery({
-		queryKey: ["user"],
+		queryKey: ["userProfile"],
 		queryFn: getUserProfile,
 	});
 	return {
