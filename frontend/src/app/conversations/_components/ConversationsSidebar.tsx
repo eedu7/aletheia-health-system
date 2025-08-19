@@ -3,6 +3,7 @@
 import { Edit, Search } from "lucide-react";
 import React from "react";
 import { ConversationsSidebarHeader } from "@/app/conversations/_components/ConversationsSidebarHeader";
+import { ToolTipWrapper } from "@/components/ToolTipWrapper";
 import {
 	Sidebar,
 	SidebarContent,
@@ -23,18 +24,22 @@ export const ConversationsSidebar = () => {
 				<SidebarGroup>
 					<SidebarGroupContent>
 						<SidebarMenu>
-							<SidebarMenuItem>
-								<SidebarMenuButton className="cursor-pointer">
-									<Edit />
-									<span>New conversation</span>
-								</SidebarMenuButton>
-							</SidebarMenuItem>
-							<SidebarMenuItem>
-								<SidebarMenuButton className="cursor-pointer">
-									<Search />
-									<span>Search conversations</span>
-								</SidebarMenuButton>
-							</SidebarMenuItem>
+							<ToolTipWrapper title="New conversation" shortcut="Ctrl + Shift + O" visible={!open}>
+								<SidebarMenuItem>
+									<SidebarMenuButton className="cursor-pointer">
+										<Edit />
+										<span>New conversation</span>
+									</SidebarMenuButton>
+								</SidebarMenuItem>
+							</ToolTipWrapper>
+							<ToolTipWrapper title="Search conversations" shortcut="Ctrl + K" visible={!open}>
+								<SidebarMenuItem>
+									<SidebarMenuButton className="cursor-pointer">
+										<Search />
+										<span>Search conversations</span>
+									</SidebarMenuButton>
+								</SidebarMenuItem>
+							</ToolTipWrapper>
 						</SidebarMenu>
 					</SidebarGroupContent>
 				</SidebarGroup>
