@@ -35,7 +35,7 @@ export const SignInForm = () => {
 	const onSubmit = (data: z.infer<typeof SignInFormSchema>) => {
 		signIn.mutate(data, {
 			onSuccess: () => {
-				router.push("/");
+				router.push(process.env.NEXT_PUBLIC_AFTER_SIGN_IN_URL!);
 			},
 		});
 	};
