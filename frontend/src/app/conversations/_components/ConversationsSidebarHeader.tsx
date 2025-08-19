@@ -39,7 +39,7 @@ export const ConversationsSidebarHeader = ({ open, toggleSidebar }: Conversation
 					</AnimatePresence>
 
 					<SidebarMenuItem>
-						<SidebarMenuButton onClick={toggleSidebar} className="cursor-pointer">
+						<SidebarMenuButton onClick={toggleSidebar} className="cursor-ew-resize">
 							<PanelLeftIcon />
 						</SidebarMenuButton>
 					</SidebarMenuItem>
