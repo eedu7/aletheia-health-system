@@ -3,7 +3,7 @@ import { z } from "zod";
 import { SignInFormSchema, SignUpFormSchema } from "@/app/auth/schemas";
 import { loginUser, registerUser } from "@/lib/api/auth";
 
-export function useAuth() {
+export function useAuthApi() {
 	const signUp = useMutation({
 		mutationKey: ["register"],
 		mutationFn: (data: z.infer<typeof SignUpFormSchema>) => registerUser(data),
