@@ -12,7 +12,7 @@ def set_auth_cookie(
     response.set_cookie(
         key=TokenType.ACCESS_TOKEN,
         value=token.access_token,
-        httponly=httponly,
+        httponly=False,
         secure=True,
         samesite="lax",
         max_age=config.JWT_ACCESS_TOKEN_EXPIRE_MINUTES * 60,
@@ -20,7 +20,7 @@ def set_auth_cookie(
     response.set_cookie(
         key=TokenType.REFRESH_TOKEN,
         value=token.refresh_token,
-        httponly=httponly,
+        httponly=False,
         secure=True,
         samesite="lax",
         max_age=config.JWT_REFRESH_TOKEN_EXPIRE_MINUTES * 60,

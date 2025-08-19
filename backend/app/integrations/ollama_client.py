@@ -1,6 +1,9 @@
-from typing import Literal, Optional
+from typing import Optional
+
 import httpx
+
 from core.exceptions import BadRequestException
+
 
 class OllamaClient:
     def __init__(self, url: str = "http://localhost:11434"):
@@ -12,7 +15,6 @@ class OllamaClient:
         model: str = "llama3.1:8b",
         temperature: Optional[float] = 0.7,
     ) -> str:
-        print(f"Now check again the prompt, the Model is '{model}'")
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.post(
@@ -21,9 +23,9 @@ class OllamaClient:
                         "prompt": prompt,
                         "model": model,
                         "temperature": temperature,
-                        "stream": False
+                        "stream": False,
                     },
-                    timeout=60.0  # optional timeout
+                    timeout=60.0,  # optional timeout
                 )
                 response.raise_for_status()
                 data = response.json()
