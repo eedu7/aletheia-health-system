@@ -9,7 +9,7 @@ export default async function ConversationsPage({ params }: ConversationsPagePro
 	const { conversationId } = await params;
 
 	return (
-		<div className="flex min-h-screen items-center justify-center">
+		<div className="flex h-full items-center justify-center">
 			<Card className="w-full max-w-md">
 				<CardHeader>
 					<CardDescription>ChatID:</CardDescription>
