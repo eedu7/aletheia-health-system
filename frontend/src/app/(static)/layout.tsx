@@ -1,5 +1,5 @@
 import React from "react";
-import { StaticPageHeader } from "@/app/(static)/_components/StaticPageHeader";
+import { StaticPageHeader } from "@/components/StaticPageHeader";
 
 export default function StaticPageLayout({ children }: { children: React.ReactNode }) {
 	return (

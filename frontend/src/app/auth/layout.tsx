@@ -1,10 +1,12 @@
 import Image from "next/image";
 import React from "react";
+import { StaticPageHeader } from "@/components/StaticPageHeader";
 import AuthResearchImage from "../../../public/images/auth-research-page.jpg";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<div className="flex min-h-screen flex-col p-2">
+		<div className="flex min-h-screen flex-col">
+			<StaticPageHeader />
 			<main className="grid flex-1 grid-cols-1 lg:grid-cols-2">
 				<div className="flex flex-col items-center justify-center">{children}</div>
 				<div className="hidden place-items-center lg:grid">
