@@ -1,20 +1,19 @@
-import { notFound } from "next/navigation";
 import React from "react";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface ChatPageProps {
-	params: { chatId: string };
+interface ConversationsPageProps {
+	params: Promise<{ conversationId?: string[] }>;
 }
 
-export default async function ChatPage({ params }: ChatPageProps) {
-	const chatId = await params.chatId;
-	if (!chatId) return notFound();
+export default async function ConversationsPage({ params }: ConversationsPageProps) {
+	const { conversationId } = await params;
+
 	return (
 		<div className="flex min-h-screen items-center justify-center">
 			<Card className="w-full max-w-md">
 				<CardHeader>
 					<CardDescription>ChatID:</CardDescription>
-					<CardTitle>{chatId}</CardTitle>
+					{conversationId && <CardTitle>{conversationId[0]}</CardTitle>}
 				</CardHeader>
 			</Card>
 		</div>
