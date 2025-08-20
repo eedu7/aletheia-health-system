@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { z } from "zod";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { PasswordInputField } from "@/app/auth/_components/PasswordInputField";
@@ -25,7 +24,6 @@ export const SignInForm = () => {
 	});
 
 	const { signIn } = useAuth();
-	const router = useRouter();
 	const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
 	const togglePasswordVisibility = () => {

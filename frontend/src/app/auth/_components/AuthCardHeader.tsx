@@ -7,11 +7,13 @@ import { cn } from "@/lib/utils";
 const merriWeather = Merriweather({
 	variable: "--font-merri-weather",
 	weight: ["700"],
+	subsets: ["latin"],
 });
 
 const openSans = Open_Sans({
 	variable: "--font-open-sans",
 	weight: ["400"],
+	subsets: ["latin"],
 });
 
 export const AuthCardHeader = () => {

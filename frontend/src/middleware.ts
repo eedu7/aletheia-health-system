@@ -25,7 +25,7 @@ export async function middleware(request: NextRequest) {
 		return NextResponse.next();
 	}
 
-	const loginUrl = new URL(process.env.NEXT_PUBLIC_AFTER_SIGN_OUT_URL, request.url);
+	const loginUrl = new URL(process.env.NEXT_PUBLIC_AFTER_SIGN_OUT_URL!, request.url);
 	return NextResponse.redirect(loginUrl);
 }
 
