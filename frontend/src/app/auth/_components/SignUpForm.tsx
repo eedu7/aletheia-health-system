@@ -34,7 +34,7 @@ export const SignUpForm = () => {
 
 	const onSubmit = async (data: z.infer<typeof SignUpFormSchema>) => {
 		try {
-			await signUp.mutateAsync(data);
+			signUp.mutateAsync(data);
 		} catch (err) {
 			console.error("Error signing up:", err);
 		}

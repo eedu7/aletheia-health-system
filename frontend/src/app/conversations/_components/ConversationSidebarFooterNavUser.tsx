@@ -1,3 +1,5 @@
+"use client";
+
 import { IconCreditCard, IconDotsVertical, IconLogout, IconNotification, IconUserCircle } from "@tabler/icons-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -10,6 +12,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import { useAuth } from "@/hooks/api/useAuth";
 
 export function ConversationSidebarFooterNavUser({
 	user,
@@ -20,6 +23,8 @@ export function ConversationSidebarFooterNavUser({
 		avatar: string;
 	};
 }) {
+	const { signOut } = useAuth();
+
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem>
@@ -74,7 +79,7 @@ export function ConversationSidebarFooterNavUser({
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem>
+						<DropdownMenuItem onClick={() => signOut.mutate()}>
 							<IconLogout />
 							Log out
 						</DropdownMenuItem>
