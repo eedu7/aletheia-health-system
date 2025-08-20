@@ -47,9 +47,7 @@ export const ConversationsSidebar = () => {
 				</SidebarGroup>
 			</SidebarContent>
 			<SidebarFooter>
-				<ConversationSidebarFooterNavUser
-					user={{ name: "@shadcn", email: "m@example.com", avatar: "https://github.com/shadcn.png" }}
-				/>
+				<ConversationSidebarFooterNavUser />
 			</SidebarFooter>
 		</Sidebar>
 	);
