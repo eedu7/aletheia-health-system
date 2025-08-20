@@ -3,10 +3,13 @@ from fastapi import APIRouter, Depends, Response, status
 from app.controllers import AuthController
 from app.schemas.requests.auth import LoginUserRequest, RegisterUserRequest
 from app.schemas.responses.auth import AuthResponse
+from core.dependencies import AuthenticationRequired
 from core.factory import Factory
-from core.utils import set_auth_cookie
+from core.utils import Cookie
 
 router = APIRouter()
+
+cookie_handler = Cookie(httponly=False)
 
 
 # NOTE: Factory() instantiation inside the route is not ideal; it creates a new factory for every request
@@ -27,7 +30,7 @@ async def register_user(
     )
 
     # Setting Up Auth Cookies
-    set_auth_cookie(response, auth_model.token)
+    cookie_handler.set_auth_cookie(response, auth_model.token)
     return auth_model
 
 
@@ -45,9 +48,14 @@ async def login(
         email=login_user_request.email, password=login_user_request.password
     )
     # Setting Up Auth Cookies
-    set_auth_cookie(response, auth_model.token)
+    cookie_handler.set_auth_cookie(response, auth_model.token)
 
     return auth_model
+
+
+@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
+async def logout(response: Response) -> None:
+    cookie_handler.delete_auth_cookie(response)
 
 
 @router.post("/social/google")

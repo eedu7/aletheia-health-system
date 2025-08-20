@@ -1,4 +1,4 @@
-from .cookies import set_auth_cookie
+from .cookies import Cookie
 from .get_timestamp import get_timestamp
 
-__all__ = ["get_timestamp", "set_auth_cookie"]
+__all__ = ["get_timestamp", "Cookie"]
