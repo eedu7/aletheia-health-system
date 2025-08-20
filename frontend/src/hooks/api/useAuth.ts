@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { loginUser, registerUser } from "@/lib/api/auth";
+import { loginUser, logoutUser, registerUser } from "@/lib/api/auth";
 import { getUserProfile } from "@/lib/api/user";
 
 export function useAuth() {
@@ -29,7 +29,13 @@ export function useAuth() {
 		mutationFn: registerUser,
 		onSuccess: async () => {
 			queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
-			router.push(process.env.NEXT_PUBLIC_AFTER_SIGN_UP_URL! || "/");
+			const afterSignUpUrl = process.env.NEXT_PUBLIC_AFTER_SIGN_UP_URL;
+
+			if (afterSignUpUrl) {
+				router.push(afterSignUpUrl);
+			} else {
+				router.push("/");
+			}
 		},
 	});
 
@@ -38,18 +44,29 @@ export function useAuth() {
 		mutationFn: loginUser,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
-			router.push(process.env.NEXT_PUBLIC_AFTER_SIGN_IN_URL! || "/");
+			const afterSignInUrl = process.env.NEXT_PUBLIC_AFTER_SIGN_IN_URL;
+
+			if (afterSignInUrl) {
+				router.push(afterSignInUrl);
+			} else {
+				router.push("/");
+			}
 		},
 	});
 
 	const signOut = useMutation({
 		mutationKey: ["logout"],
-		mutationFn: async () => {
-			return null;
-		},
+		mutationFn: logoutUser,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["auth", "user"] });
-			router.push(process.env.NEXT_PUBLIC_AFTER_SIGN_OUT_URL! || "/");
+
+			const afterSignOutUrl = process.env.NEXT_PUBLIC_AFTER_SIGN_OUT_URL;
+
+			if (afterSignOutUrl) {
+				router.push(afterSignOutUrl);
+			} else {
+				router.push("/");
+			}
 		},
 	});
 
