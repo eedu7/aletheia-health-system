@@ -12,7 +12,7 @@ import { SignUpFormSchema } from "@/app/auth/schemas";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAuthApi } from "@/hooks/api/useAuthApi";
+import { useAuth } from "@/hooks/api/useAuth";
 
 export const SignUpForm = () => {
 	const form = useForm<z.infer<typeof SignUpFormSchema>>({
@@ -26,7 +26,7 @@ export const SignUpForm = () => {
 		mode: "onSubmit",
 	});
 
-	const { signUp } = useAuthApi();
+	const { signUp } = useAuth();
 	const router = useRouter();
 	const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
