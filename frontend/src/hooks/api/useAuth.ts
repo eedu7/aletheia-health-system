@@ -58,8 +58,8 @@ export function useAuth() {
 		isAuthenticated: !!user,
 		isLoading,
 		isError,
-		signIn: signIn.mutateAsync,
-		signUp: signUp.mutateAsync,
-		signOut: signOut.mutateAsync,
+		signIn,
+		signUp,
+		signOut,
 	};
 }

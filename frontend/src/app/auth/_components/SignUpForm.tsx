@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { z } from "zod";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { PasswordInputField } from "@/app/auth/_components/PasswordInputField";
@@ -27,19 +26,18 @@ export const SignUpForm = () => {
 	});
 
 	const { signUp } = useAuth();
-	const router = useRouter();
 	const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
 	const togglePasswordVisibility = () => {
 		setIsPasswordVisible((prev) => !prev);
 	};
 
-	const onSubmit = (data: z.infer<typeof SignUpFormSchema>) => {
-		signUp.mutate(data, {
-			onSuccess: () => {
-				router.push(process.env.NEXT_PUBLIC_AFTER_SIGN_UP_URL!);
-			},
-		});
+	const onSubmit = async (data: z.infer<typeof SignUpFormSchema>) => {
+		try {
+			await signUp.mutateAsync(data);
+		} catch (err) {
+			console.error("Error signing up:", err);
+		}
 	};
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
 		if (event.ctrlKey && event.key === "Enter") {
