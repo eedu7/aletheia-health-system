@@ -10,16 +10,16 @@ import {
 	NavigationMenuList,
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { useUserApi } from "@/hooks/api/useUserApi";
+import { useAuth } from "@/hooks/api/useAuth";
 import { cn } from "@/lib/utils";
 
 export const StaticPageNavbar = () => {
-	const { user } = useUserApi();
+	const { isAuthenticated, user } = useAuth();
 	return (
 		<NavigationMenu>
 			<NavigationMenuList>
-				{user.isSuccess ? (
-					<StaticPageNavbarAvatar fullName={user.data.fullName} />
+				{isAuthenticated && user ? (
+					<StaticPageNavbarAvatar fullName={user.fullName} />
 				) : (
 					<>
 						<NavigationMenuItem>
