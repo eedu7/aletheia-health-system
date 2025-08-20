@@ -17,3 +17,7 @@ export async function loginUser(data: z.infer<typeof SignInFormSchema>) {
 	const res = await api.post("/v1/auth/login", data);
 	return res.data;
 }
+
+export async function logoutUser() {
+	await api.post("/v1/auth/logout");
+}
