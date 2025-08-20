@@ -3,6 +3,7 @@
 import { PanelLeftIcon } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import React from "react";
+import { ToolTipWrapper } from "@/components/ToolTipWrapper";
 import {
 	SidebarGroup,
 	SidebarGroupContent,
@@ -37,12 +38,13 @@ export const ConversationsSidebarHeader = ({ open, toggleSidebar }: Conversation
 							</SidebarMenuItem>
 						)}
 					</AnimatePresence>
-
-					<SidebarMenuItem>
-						<SidebarMenuButton onClick={toggleSidebar} className="cursor-ew-resize">
-							<PanelLeftIcon />
-						</SidebarMenuButton>
-					</SidebarMenuItem>
+					<ToolTipWrapper title={open ? "Close sidebar" : "Open sidebar"} visible={true}>
+						<SidebarMenuItem>
+							<SidebarMenuButton onClick={toggleSidebar} className="cursor-ew-resize">
+								<PanelLeftIcon />
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					</ToolTipWrapper>
 				</SidebarMenu>
 			</SidebarGroupContent>
 		</SidebarGroup>
