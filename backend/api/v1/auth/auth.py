@@ -3,7 +3,6 @@ from fastapi import APIRouter, Depends, Response, status
 from app.controllers import AuthController
 from app.schemas.requests.auth import LoginUserRequest, RegisterUserRequest
 from app.schemas.responses.auth import AuthResponse
-from core.dependencies import AuthenticationRequired
 from core.factory import Factory
 from core.utils import Cookie
 
@@ -44,9 +43,7 @@ async def login(
     response: Response,
     auth_controller: AuthController = Depends(Factory().get_auth_controller),
 ) -> AuthResponse:
-    auth_model = await auth_controller.login(
-        email=login_user_request.email, password=login_user_request.password
-    )
+    auth_model = await auth_controller.login(email=login_user_request.email, password=login_user_request.password)
     # Setting Up Auth Cookies
     cookie_handler.set_auth_cookie(response, auth_model.token)
 
@@ -61,4 +58,5 @@ async def logout(response: Response) -> None:
 @router.post("/social/google")
 async def google_login():
     # TODO: Google Login
+    # Alert: Hello, World
     return {"message": "Google Login"}

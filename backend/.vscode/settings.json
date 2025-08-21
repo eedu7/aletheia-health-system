@@ -1,0 +1,31 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.fixAll.ruff": "always",
+        "source.organizeImports.ruff": "always",
+        "source.sort.json": "always",
+        "source.unusedImports": "always"
+    },
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.completeFunctionParens": true,
+    "ruff.enable": true,
+    "ruff.fixAll": true,
+    "ruff.lineLength": 120,
+    "ruff.lint.enable": true,
+    "ruff.organizeImports": true,
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#182F45",
+        "titleBar.activeBackground": "#224261",
+        "titleBar.activeForeground": "#F7FAFC"
+    },
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Aletheia Health System Database",
+            "database": "aletheia-health-system-db",
+            "username": "postgres"
+        }
+    ]
+}
