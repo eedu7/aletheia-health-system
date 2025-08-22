@@ -1,4 +1,3 @@
-from datetime import datetime
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
@@ -16,4 +15,3 @@ class BaseMessageResponse(BaseModel):
 
 class MessageResponse(BaseMessageResponse):
     conversation_id: UUID
-    created_at: datetime
