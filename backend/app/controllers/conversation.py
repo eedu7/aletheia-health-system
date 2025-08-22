@@ -1,4 +1,3 @@
-from typing import Sequence
 from uuid import UUID
 
 from psycopg.errors import ForeignKeyViolation
@@ -6,6 +5,7 @@ from sqlalchemy.exc import IntegrityError
 
 from app.models import Conversation
 from app.repositories import ConversationRepository
+from app.schemas.extra.pagination import PaginatedResponse
 from app.schemas.responses.conversation import ConversationResponse
 from core.controller import BaseController
 from core.exceptions import BadRequestException, NotFoundException
@@ -53,10 +53,19 @@ class ConversationController(BaseController[Conversation]):
 
     async def get_user_conversations(
         self, user_id: UUID, skip: int = 0, limit: int = 10
-    ) -> Sequence[Conversation]:
+    ) -> PaginatedResponse[ConversationResponse]:
         try:
-            return await self.conversation_repository.get_user_conversations(
+            (
+                conversations,
+                total,
+            ) = await self.conversation_repository.get_user_conversations(
                 user_id, skip, limit
+            )
+            return PaginatedResponse(
+                items=[ConversationResponse.model_validate(c) for c in conversations],
+                total=total,
+                page=(skip // limit) + 1,
+                size=limit,
             )
         except IntegrityError as exc:
             orig = getattr(exc, "orig", None)
