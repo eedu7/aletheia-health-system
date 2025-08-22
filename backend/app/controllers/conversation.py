@@ -16,7 +16,9 @@ class ConversationController(BaseController[Conversation]):
         super().__init__(model=Conversation, repository=conversation_repository)
         self.conversation_repository = conversation_repository
 
-    async def create_conversation(self, user_id: UUID, title: str) -> ConversationResponse:
+    async def create_conversation(
+        self, user_id: UUID, title: str
+    ) -> ConversationResponse:
         try:
             conversation: Conversation | None = await self.create(
                 {
@@ -34,24 +36,36 @@ class ConversationController(BaseController[Conversation]):
             orig = getattr(exc, "orig", None)
 
             if isinstance(orig, ForeignKeyViolation):
-                raise NotFoundException(f"User with id '{user_id}' does not exist.") from exc
-            raise BadRequestException("Integrity error while creating conversation") from exc
+                raise NotFoundException(
+                    f"User with id '{user_id}' does not exist."
+                ) from exc
+            raise BadRequestException(
+                "Integrity error while creating conversation"
+            ) from exc
 
         except Exception as exception:
             raise BadRequestException("Error in create conversation: " + str(exception))
 
-    async def get_conversation_by_id(self, conversation_id: UUID) -> Conversation | None:
+    async def get_conversation_by_id(
+        self, conversation_id: UUID
+    ) -> Conversation | None:
         return await self.get_by_id(conversation_id)
 
-    async def get_user_conversations(self, user_id: UUID, skip: int = 0, limit: int = 10) -> Sequence[Conversation]:
+    async def get_user_conversations(
+        self, user_id: UUID, skip: int = 0, limit: int = 10
+    ) -> Sequence[Conversation]:
         try:
-            return await self.conversation_repository.get_user_conversations(user_id, skip, limit)
+            return await self.conversation_repository.get_user_conversations(
+                user_id, skip, limit
+            )
         except IntegrityError as exc:
             orig = getattr(exc, "orig", None)
 
             if isinstance(orig, ForeignKeyViolation):
                 raise NotFoundException(f"User with id '{user_id}' not found") from exc
-            raise BadRequestException("Integrity error while creating conversation") from exc
+            raise BadRequestException(
+                "Integrity error while creating conversation"
+            ) from exc
         except Exception as exc:
             raise BadRequestException(f"Error in fetching conversations: {exc}")
 
