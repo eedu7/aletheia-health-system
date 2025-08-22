@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import React from "react";
 import {
 	SidebarGroup,
@@ -11,11 +12,18 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 import { useConversation } from "@/hooks/api/useConversation";
+import { cn } from "@/lib/utils";
 
 export const SidebarGroupUserConversations = () => {
 	const { open } = useSidebar();
 	const { userConversations } = useConversation();
 	const { data, isLoading, isError } = userConversations;
+	const pathName = usePathname();
+
+	const currentId = pathName.split("/").pop();
+	const isActive = (id: string): boolean => {
+		return currentId ? currentId === id : false;
+	};
 
 	if (!open) return null;
 
@@ -50,8 +58,17 @@ export const SidebarGroupUserConversations = () => {
 				<SidebarMenu>
 					{data.items.map(({ id, title }) => (
 						<SidebarMenuItem key={id}>
-							<SidebarMenuButton>
-								<span className="truncate">{title}</span>
+							<SidebarMenuButton
+								asChild
+								isActive={isActive(id)}
+								className={cn(!isActive(id) && "text-gray-700")}
+							>
+								<a
+									href={`/conversations/${id}`}
+									className="animate-slide-in flex w-full items-center justify-start gap-2 opacity-0"
+								>
+									{title}
+								</a>
 							</SidebarMenuButton>
 						</SidebarMenuItem>
 					))}
