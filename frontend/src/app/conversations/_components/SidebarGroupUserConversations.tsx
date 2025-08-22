@@ -1,8 +1,10 @@
 "use client";
 
+import { Scrollbar } from "@radix-ui/react-scroll-area";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
 	SidebarGroup,
 	SidebarGroupContent,
@@ -53,27 +55,30 @@ export const SidebarGroupUserConversations = () => {
 	}
 
 	return (
-		<SidebarGroup>
+		<SidebarGroup className="overflow-y-hidden">
 			<SidebarGroupLabel>Conversations</SidebarGroupLabel>
 			<SidebarGroupContent>
 				<SidebarMenu>
-					{data.items.map(({ id, title }) => (
-						<SidebarMenuItem key={id}>
-							<SidebarMenuButton
-								asChild
-								isActive={isActive(id)}
-								className={cn(!isActive(id) && "text-gray-700")}
-							>
-								<Link
-									prefetch={false}
-									href={`/conversations/${id}`}
-									className="animate-slide-in flex w-full items-center justify-start gap-2 opacity-0"
+					<ScrollArea className="h-[768px]">
+						{data.items.map(({ id, title }) => (
+							<SidebarMenuItem key={id}>
+								<SidebarMenuButton
+									asChild
+									isActive={isActive(id)}
+									className={cn(!isActive(id) && "text-gray-700")}
 								>
-									{title}
-								</Link>
-							</SidebarMenuButton>
-						</SidebarMenuItem>
-					))}
+									<Link
+										prefetch={false}
+										href={`/conversations/${id}`}
+										className="animate-slide-in flex w-full items-center justify-start gap-2 opacity-0"
+									>
+										{title}
+									</Link>
+								</SidebarMenuButton>
+							</SidebarMenuItem>
+						))}
+						<Scrollbar orientation="vertical" />
+					</ScrollArea>
 				</SidebarMenu>
 			</SidebarGroupContent>
 		</SidebarGroup>
