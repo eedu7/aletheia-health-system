@@ -17,7 +17,9 @@ router = APIRouter(
 @router.post("/", response_model=ConversationResponse)
 async def create_conversation(
     conversation_request_data: ConversationCreateRequest,
-    conversation_controller: ConversationController = Depends(Factory().get_conversation_controller),
+    conversation_controller: ConversationController = Depends(
+        Factory().get_conversation_controller
+    ),
 ) -> ConversationResponse:
     return await conversation_controller.create_conversation(
         user_id=conversation_request_data.user_id,
@@ -27,7 +29,9 @@ async def create_conversation(
 
 @router.get("/")
 async def get_conversations(
-    conversation_controller: ConversationController = Depends(Factory().get_conversation_controller),
+    conversation_controller: ConversationController = Depends(
+        Factory().get_conversation_controller
+    ),
 ):
     return await conversation_controller.get_all()
 
@@ -37,15 +41,21 @@ async def get_all_user_conversations(
     request: Request,
     skip: int = 0,
     limit: int = 10,
-    conversation_controller: ConversationController = Depends(Factory().get_conversation_controller),
+    conversation_controller: ConversationController = Depends(
+        Factory().get_conversation_controller
+    ),
 ) -> PaginatedResponse[ConversationResponse]:
-    return await conversation_controller.get_user_conversations(user_id=request.user.id, skip=skip, limit=limit)
+    return await conversation_controller.get_user_conversations(
+        user_id=request.user.id, skip=skip, limit=limit
+    )
 
 
 @router.get("/{conversation_id}")
 async def get_conversation(
     conversation_id: UUID,
-    conversation_controller: ConversationController = Depends(Factory().get_conversation_controller),
+    conversation_controller: ConversationController = Depends(
+        Factory().get_conversation_controller
+    ),
 ):
     return await conversation_controller.get_conversation_by_id(conversation_id)
 
