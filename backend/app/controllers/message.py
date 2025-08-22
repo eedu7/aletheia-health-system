@@ -14,9 +14,7 @@ class MessageController(BaseController[Message]):
         super().__init__(model=Message, repository=message_repository)
         self.message_repository = message_repository
 
-    async def create_message(
-        self, conversation_id: UUID, content: str, ollama_client: OllamaClient
-    ) -> MessageResponse:
+    async def create_message(self, conversation_id: UUID, content: str, ollama_client: OllamaClient):
         await self.create(
             {
                 "conversation_id": conversation_id,
@@ -26,14 +24,13 @@ class MessageController(BaseController[Message]):
         )
 
         ai_reply_text = await ollama_client.generate(content)
-        ai_message: Message = await self.create(
+        ai_message: Message | None = await self.create(
             {
                 "conversation_id": conversation_id,
                 "sender": SenderType.ASSISTANT.value,
                 "content": ai_reply_text,
             }
         )
-
         return MessageResponse.model_validate(ai_message)
 
     async def get_by_conversation_id(self, conversation_id: str) -> List[Message]:

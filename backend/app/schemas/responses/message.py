@@ -14,6 +14,6 @@ class BaseMessageResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class MessageResponse(BaseModel):
+class MessageResponse(BaseMessageResponse):
     conversation_id: UUID
     created_at: datetime
