@@ -57,26 +57,23 @@ export const SidebarGroupUserConversations = () => {
 			<SidebarGroupLabel>Conversations</SidebarGroupLabel>
 			<SidebarGroupContent>
 				<SidebarMenu>
-					{data.items
-						.slice()
-						.reverse()
-						.map(({ id, title }) => (
-							<SidebarMenuItem key={id}>
-								<SidebarMenuButton
-									asChild
-									isActive={isActive(id)}
-									className={cn(!isActive(id) && "text-gray-700")}
+					{data.items.map(({ id, title }) => (
+						<SidebarMenuItem key={id}>
+							<SidebarMenuButton
+								asChild
+								isActive={isActive(id)}
+								className={cn(!isActive(id) && "text-gray-700")}
+							>
+								<Link
+									prefetch={false}
+									href={`/conversations/${id}`}
+									className="animate-slide-in flex w-full items-center justify-start gap-2 opacity-0"
 								>
-									<Link
-										prefetch={false}
-										href={`/conversations/${id}`}
-										className="animate-slide-in flex w-full items-center justify-start gap-2 opacity-0"
-									>
-										{title}
-									</Link>
-								</SidebarMenuButton>
-							</SidebarMenuItem>
-						))}
+									{title}
+								</Link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					))}
 				</SidebarMenu>
 			</SidebarGroupContent>
 		</SidebarGroup>
