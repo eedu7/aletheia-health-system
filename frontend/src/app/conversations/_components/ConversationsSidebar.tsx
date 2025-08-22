@@ -4,6 +4,7 @@ import { Edit, Search } from "lucide-react";
 import React from "react";
 import { ConversationSidebarFooterNavUser } from "@/app/conversations/_components/ConversationSidebarFooterNavUser";
 import { ConversationsSidebarHeader } from "@/app/conversations/_components/ConversationsSidebarHeader";
+import { SidebarGroupUserConversations } from "@/app/conversations/_components/SidebarGroupUserConversations";
 import { ToolTipWrapper } from "@/components/ToolTipWrapper";
 import {
 	Sidebar,
@@ -18,11 +19,12 @@ import {
 } from "@/components/ui/sidebar";
 
 export const ConversationsSidebar = () => {
-	const { open, toggleSidebar } = useSidebar();
+	const { open } = useSidebar();
+
 	return (
 		<Sidebar collapsible="icon">
 			<SidebarContent className="overflow-x-hidden">
-				<ConversationsSidebarHeader open={open} toggleSidebar={toggleSidebar} />
+				<ConversationsSidebarHeader />
 				<SidebarGroup>
 					<SidebarGroupContent>
 						<SidebarMenu>
@@ -45,6 +47,7 @@ export const ConversationsSidebar = () => {
 						</SidebarMenu>
 					</SidebarGroupContent>
 				</SidebarGroup>
+				<SidebarGroupUserConversations />
 			</SidebarContent>
 			<SidebarFooter>
 				<ConversationSidebarFooterNavUser />

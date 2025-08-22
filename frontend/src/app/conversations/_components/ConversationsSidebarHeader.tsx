@@ -10,14 +10,12 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
+	useSidebar,
 } from "@/components/ui/sidebar";
 
-interface ConversationsSidebarHeaderProps {
-	open: boolean;
-	toggleSidebar: () => void;
-}
+export const ConversationsSidebarHeader = () => {
+	const { open, toggleSidebar } = useSidebar();
 
-export const ConversationsSidebarHeader = ({ open, toggleSidebar }: ConversationsSidebarHeaderProps) => {
 	return (
 		<SidebarGroup>
 			<SidebarGroupContent>
