@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 
 from app.controllers import ConversationController
 from app.schemas.requests.conversation import ConversationCreateRequest
@@ -16,9 +16,7 @@ router = APIRouter(
 @router.post("/", response_model=ConversationResponse)
 async def create_conversation(
     conversation_request_data: ConversationCreateRequest,
-    conversation_controller: ConversationController = Depends(
-        Factory().get_conversation_controller
-    ),
+    conversation_controller: ConversationController = Depends(Factory().get_conversation_controller),
 ) -> ConversationResponse:
     return await conversation_controller.create_conversation(
         user_id=conversation_request_data.user_id,
@@ -26,12 +24,17 @@ async def create_conversation(
     )
 
 
+@router.get("/")
+async def get_all_user_conversations(
+    request: Request, conversation_controller: ConversationController = Depends(Factory().get_conversation_controller)
+):
+    pass
+
+
 @router.get("/{conversation_id}")
 async def get_conversation(
     conversation_id: UUID,
-    conversation_controller: ConversationController = Depends(
-        Factory().get_conversation_controller
-    ),
+    conversation_controller: ConversationController = Depends(Factory().get_conversation_controller),
 ):
     return await conversation_controller.get_conversation_by_id(conversation_id)
 
