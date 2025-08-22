@@ -3,7 +3,7 @@ import { CreateConversation, CreateConversationResponse, GetUserConversationsRes
 
 // TODO: Proper Types and error handling
 export async function getUserConversations(): Promise<GetUserConversationsResponse> {
-	const res = await api.get<GetUserConversationsResponse>("/v1/conversations/user/");
+	const res = await api.get<GetUserConversationsResponse>("/v1/conversations/user/?limit=50");
 	return res.data;
 }
 

@@ -16,6 +16,7 @@ export function useConversation() {
 		mutationKey: ["conversations", "createConversation"],
 		mutationFn: createUserConversation,
 		onSuccess: () => {
+			console.log("Invalidating the queries");
 			queryClient.invalidateQueries({ queryKey: ["conversations", "userConversations"] });
 		},
 	});
