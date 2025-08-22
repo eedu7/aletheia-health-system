@@ -6,11 +6,14 @@ from pydantic import BaseModel, ConfigDict
 from app.schemas.extra import SenderType
 
 
-class MessageResponse(BaseModel):
+class BaseMessageResponse(BaseModel):
     id: UUID
-    conversation_id: UUID
     sender: SenderType
     content: str
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class MessageResponse(BaseModel):
+    conversation_id: UUID

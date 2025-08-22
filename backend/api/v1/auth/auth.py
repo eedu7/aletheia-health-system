@@ -43,7 +43,9 @@ async def login(
     response: Response,
     auth_controller: AuthController = Depends(Factory().get_auth_controller),
 ) -> AuthResponse:
-    auth_model = await auth_controller.login(email=login_user_request.email, password=login_user_request.password)
+    auth_model = await auth_controller.login(
+        email=login_user_request.email, password=login_user_request.password
+    )
     # Setting Up Auth Cookies
     cookie_handler.set_auth_cookie(response, auth_model.token)
 

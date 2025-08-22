@@ -34,3 +34,11 @@ async def get_conversation(
     ),
 ):
     return await conversation_controller.get_conversation_by_id(conversation_id)
+
+
+@router.put("/")
+async def update_conversation(): ...
+
+
+@router.delete("/")
+async def delete_conversation(): ...

@@ -7,7 +7,7 @@ from core.database import Base, Propagation, Transactional
 from core.exceptions import NotFoundException
 from core.repository import BaseRepository
 
-ModelType = TypeVar("ModelType", bound=Base)
+ModelType = TypeVar("ModelType", bound=Base)  # type: ignore
 
 
 class BaseController(Generic[ModelType]):
@@ -58,8 +58,7 @@ class BaseController(Generic[ModelType]):
         :param attributes: The attributes to create the object with.
         :return: The created object.
         """
-        create = await self.repository.create(attributes)
-        return create
+        return await self.repository.create(attributes)
 
     @Transactional(propagation=Propagation.REQUIRED)
     async def delete(self, model: ModelType) -> None:
@@ -73,7 +72,7 @@ class BaseController(Generic[ModelType]):
 
     @staticmethod
     async def extract_attributes_from_schema(
-        schema: BaseModel, excludes: set = None
+        schema: BaseModel, excludes: set | None = None
     ) -> dict[str, Any]:
         """
         Extracts the attributes from the schema.
@@ -83,4 +82,4 @@ class BaseController(Generic[ModelType]):
         :return: The attributes.
         """
 
-        return await schema.dict(exclude=excludes, exclude_unset=True)
+        return schema.dict(exclude=excludes, exclude_unset=True)

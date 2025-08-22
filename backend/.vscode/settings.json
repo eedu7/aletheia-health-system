@@ -5,27 +5,32 @@
         "source.sort.json": "always",
         "source.unusedImports": "always"
     },
+    "explorer.compactFolders": false,
     "python.analysis.autoImportCompletions": true,
+    "python.analysis.autoSearchPaths": true,
     "python.analysis.completeFunctionParens": true,
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.variableTypes": true,
+    "python.languageServer": "Pylance",
     "ruff.enable": true,
     "ruff.fixAll": true,
     "ruff.lineLength": 120,
     "ruff.lint.enable": true,
     "ruff.organizeImports": true,
+    "sqltools.connections": [
+        {
+            "database": "aletheia-health-system-db",
+            "driver": "PostgreSQL",
+            "name": "Aletheia Health System Database",
+            "port": 5432,
+            "previewLimit": 50,
+            "server": "localhost",
+            "username": "postgres"
+        }
+    ],
     "workbench.colorCustomizations": {
         "activityBar.background": "#182F45",
         "titleBar.activeBackground": "#224261",
         "titleBar.activeForeground": "#F7FAFC"
-    },
-    "sqltools.connections": [
-        {
-            "previewLimit": 50,
-            "server": "localhost",
-            "port": 5432,
-            "driver": "PostgreSQL",
-            "name": "Aletheia Health System Database",
-            "database": "aletheia-health-system-db",
-            "username": "postgres"
-        }
-    ]
+    }
 }

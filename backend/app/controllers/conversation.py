@@ -18,15 +18,20 @@ class ConversationController(BaseController[Conversation]):
 
     async def create_conversation(
         self, user_id: UUID, title: str
-    ) -> ConversationResponse | None:
+    ) -> ConversationResponse:
         try:
-            conversation = await self.create(
+            conversation: Conversation | None = await self.create(
                 {
                     "user_id": user_id,
                     "title": title,
                 }
             )
+
+            if not conversation:
+                raise BadRequestException("Error in saving a conversation")
+
             return ConversationResponse.model_validate(conversation)
+
         except IntegrityError as exc:
             orig = getattr(exc, "orig", None)
 
@@ -34,6 +39,9 @@ class ConversationController(BaseController[Conversation]):
                 raise NotFoundException(
                     f"User with id '{user_id}' does not exist."
                 ) from exc
+            raise BadRequestException(
+                "Integrity error while creating conversation"
+            ) from exc
 
         except Exception as exception:
             raise BadRequestException("Error in create conversation: " + str(exception))
