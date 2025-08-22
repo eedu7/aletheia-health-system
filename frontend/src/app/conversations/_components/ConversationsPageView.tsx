@@ -26,8 +26,6 @@ export const ConversationsPageView = ({ conversationId }: ConversationsPageViewP
 			setCurrentConversation(newId);
 			router.replace(`/conversations/${newId}`);
 		}
-
-		console.log(currentConversation);
 	};
 
 	return (

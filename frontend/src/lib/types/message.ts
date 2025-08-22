@@ -3,3 +3,9 @@ export type Message = {
 	sender: string;
 	content: string;
 };
+
+export type CreateMessage = {
+	conversationId: string;
+	senderType: string;
+	content: string;
+};
