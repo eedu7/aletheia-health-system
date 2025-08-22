@@ -1,3 +1,4 @@
+from typing import List
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, Request
@@ -24,11 +25,19 @@ async def create_conversation(
     )
 
 
-@router.get("/")
+@router.get("/", response_model=List[ConversationResponse])
 async def get_all_user_conversations(
-    request: Request, conversation_controller: ConversationController = Depends(Factory().get_conversation_controller)
-):
-    pass
+    request: Request,
+    skip: int = 0,
+    limit: int = 10,
+    conversation_controller: ConversationController = Depends(Factory().get_conversation_controller),
+) -> List[ConversationResponse]:
+    print("Hello, Goold World")
+    conversations = await conversation_controller.get_user_conversations(
+        user_id=request.user.id, skip=skip, limit=limit
+    )
+
+    return [ConversationResponse.model_validate(c) for c in conversations]
 
 
 @router.get("/{conversation_id}")

@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import List
 from uuid import UUID
 
@@ -11,10 +10,6 @@ class ConversationResponse(BaseModel):
     id: UUID
     title: str
     user_id: UUID
-    created_at: datetime
+    messages: List[BaseMessageResponse]
 
     model_config = ConfigDict(from_attributes=True)
-
-
-class AllConversationsResponse(ConversationResponse):
-    messages: List[BaseMessageResponse]
