@@ -9,14 +9,10 @@ from core.repository import BaseRepository
 
 
 class ConversationRepository(BaseRepository[Conversation]):
-    async def get_by_user(
-        self, user_id: str, join_: set[str] | None = None
-    ) -> List[Conversation]:
+    async def get_by_user(self, user_id: str, join_: set[str] | None = None) -> List[Conversation]:
         return await self.get_by("user_id", user_id, join_)
 
-    async def get_by_title(
-        self, title: str, join_: set[str] | None = None
-    ) -> Conversation | None:
+    async def get_by_title(self, title: str, join_: set[str] | None = None) -> Conversation | None:
         return await self.get_by("title", title, join_, unique=True, or_none=True)
 
     async def get_user_conversations(
@@ -27,6 +23,7 @@ class ConversationRepository(BaseRepository[Conversation]):
             .where(Conversation.user_id == user_id)
             .offset(skip)
             .limit(limit)
+            .order_by(Conversation.created_at.desc())
         )
 
         results: Result[Tuple[Conversation]] = await self.session.execute(query)
