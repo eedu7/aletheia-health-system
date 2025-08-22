@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import {
@@ -63,12 +64,13 @@ export const SidebarGroupUserConversations = () => {
 								isActive={isActive(id)}
 								className={cn(!isActive(id) && "text-gray-700")}
 							>
-								<a
+								<Link
+									prefetch={false}
 									href={`/conversations/${id}`}
 									className="animate-slide-in flex w-full items-center justify-start gap-2 opacity-0"
 								>
 									{title}
-								</a>
+								</Link>
 							</SidebarMenuButton>
 						</SidebarMenuItem>
 					))}

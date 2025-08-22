@@ -4,7 +4,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function ConversationsLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<SidebarProvider defaultOpen={false}>
+		<SidebarProvider>
 			<ConversationsSidebar />
 			<main className="w-full">{children}</main>
 		</SidebarProvider>
