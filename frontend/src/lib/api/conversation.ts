@@ -13,3 +13,13 @@ export async function getUserConversations(): Promise<GetUserConversationsRespon
 	const res = await api.get("/v1/conversations/user/");
 	return res.data;
 }
+
+type CreateConversationResponse = {
+	id: string;
+	title: string;
+};
+
+export async function createUserConversation(title: string): Promise<CreateConversationResponse> {
+	const res = await api.post("/v1/conversations/", { title });
+	return res.data;
+}
