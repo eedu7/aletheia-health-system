@@ -22,13 +22,12 @@ export const ConversationsPageView = ({ conversationId }: ConversationsPageViewP
 	const submit = async () => {
 		if (!conversationId) {
 			const newConversation = await createConversation.mutateAsync({ title: prompt });
-			if (createConversation.status == "success") {
-				setCurrentConversation(newConversation.id);
-				router.replace(`/conversations/${newConversation.id}`);
-			}
+			const newId = newConversation.id;
+			setCurrentConversation(newId);
+			router.replace(`/conversations/${newId}`);
 		}
 
-		alert("Conversation created successfully.");
+		console.log(currentConversation);
 	};
 
 	return (
