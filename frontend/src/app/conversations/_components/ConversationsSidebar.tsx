@@ -1,6 +1,7 @@
 "use client";
 
 import { Edit, Search } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 import { ConversationSidebarFooterNavUser } from "@/app/conversations/_components/ConversationSidebarFooterNavUser";
 import { ConversationsSidebarHeader } from "@/app/conversations/_components/ConversationsSidebarHeader";
@@ -30,9 +31,11 @@ export const ConversationsSidebar = () => {
 						<SidebarMenu>
 							<ToolTipWrapper title="New conversation" shortcut="Ctrl + Shift + O" visible={!open}>
 								<SidebarMenuItem>
-									<SidebarMenuButton className="cursor-pointer">
-										<Edit />
-										<span>New conversation</span>
+									<SidebarMenuButton className="cursor-pointer" asChild>
+										<Link href="/conversations" prefetch={false}>
+											<Edit />
+											<span>New conversation</span>
+										</Link>
 									</SidebarMenuButton>
 								</SidebarMenuItem>
 							</ToolTipWrapper>
