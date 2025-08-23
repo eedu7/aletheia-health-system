@@ -8,7 +8,8 @@ interface useConversationProps {
 	conversationId?: string;
 }
 
-export function useConversation({ conversationId }: useConversationProps) {
+export function useConversation(props?: useConversationProps) {
+	const conversationId = props?.conversationId;
 	const queryClient = new QueryClient();
 
 	const userAllConversations = useQuery({

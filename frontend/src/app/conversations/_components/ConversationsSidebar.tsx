@@ -32,7 +32,8 @@ export const ConversationsSidebar = () => {
 							<ToolTipWrapper title="New conversation" shortcut="Ctrl + Shift + O" visible={!open}>
 								<SidebarMenuItem>
 									<SidebarMenuButton className="cursor-pointer" asChild>
-										<Link href="/conversations" prefetch={false}>
+										{/*TODO: Change it to the Link from next*/}
+										<Link href="/conversations">
 											<Edit />
 											<span>New conversation</span>
 										</Link>

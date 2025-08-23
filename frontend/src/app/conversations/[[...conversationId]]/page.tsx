@@ -10,7 +10,7 @@ export default async function ConversationsPage({ params }: ConversationsPagePro
 
 	return (
 		<div className="flex h-full items-center justify-center">
-			<ConversationsPageView conversationId={conversationId?.[0]} />
+			<ConversationsPageView conversationId={conversationId?.[0] ?? "new"} />
 		</div>
 	);
 }
