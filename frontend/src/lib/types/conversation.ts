@@ -16,3 +16,8 @@ export type GetUserConversationsResponse = {
 
 export type CreateConversation = Pick<Conversation, "title">;
 export type CreateConversationResponse = Pick<Conversation, "id" | "title">;
+export type ConversationIDResponse = {
+	id: string;
+	title: string;
+	messages: Omit<Message, "conversationId">[];
+};

@@ -19,8 +19,8 @@ import { cn } from "@/lib/utils";
 
 export const SidebarGroupUserConversations = () => {
 	const { open } = useSidebar();
-	const { userConversations } = useConversation();
-	const { data, isLoading, isError } = userConversations;
+	const { userAllConversations } = useConversation();
+	const { data, isLoading, isError } = userAllConversations;
 	const pathName = usePathname();
 
 	const currentId = pathName.split("/").pop();
