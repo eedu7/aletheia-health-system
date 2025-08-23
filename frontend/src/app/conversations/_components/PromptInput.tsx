@@ -1,34 +1,68 @@
 "use client";
 
 import { ArrowUp, Plus, Settings2 } from "lucide-react";
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
+import React, { useRef, useState } from "react";
+import { ClickSafeButton } from "@/app/conversations/_components/ClickSafeButton";
 import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 
-export const PromptInput = () => {
+interface PromptInputProps {
+	onSubmit: (value: string) => void;
+	className?: string;
+}
+
+export const PromptInput = ({ onSubmit, className }: PromptInputProps) => {
 	const [message, setMessage] = useState("");
+	const promptRef = useRef<HTMLTextAreaElement | null>(null);
+
+	const handleSubmit = (e?: React.FormEvent<HTMLFormElement> | React.KeyboardEvent) => {
+		if (e) e.preventDefault();
+
+		if (!message.trim()) return;
+		onSubmit(message);
+		setMessage("");
+	};
+
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+		if (e.key === "Enter" && !e.shiftKey) {
+			e.preventDefault();
+			handleSubmit(e);
+		}
+	};
 
 	return (
-		<form className="grid w-full max-w-2xl rounded-xl border p-4 shadow">
+		<form
+			className={cn("grid w-full max-w-2xl cursor-text rounded-xl border p-4 shadow", className)}
+			onClick={() => promptRef.current?.focus()}
+			onSubmit={handleSubmit}
+		>
 			<Textarea
+				ref={promptRef}
 				className="w-full resize-none border-0 shadow-none ring-0 outline-none focus:border-0 focus-visible:ring-0 focus-visible:outline-none"
 				value={message}
+				onKeyDown={handleKeyDown}
 				onChange={(e) => setMessage(e.target.value)}
 				placeholder="Type your message..."
 			/>
 			<div className="flex items-center justify-between">
 				{/*TODO: Make these buttons work and do something*/}
 				<div className="space-x-2">
-					<Button type="button" size="icon" variant="outline" className="cursor-pointer" disabled>
+					<ClickSafeButton type="button" size="icon" variant="outline" className="cursor-pointer" disabled>
 						<Plus />
-					</Button>
-					<Button type="button" size="icon" variant="outline" className="cursor-pointer" disabled>
+					</ClickSafeButton>
+					<ClickSafeButton type="button" size="icon" variant="outline" className="cursor-pointer" disabled>
 						<Settings2 />
-					</Button>
+					</ClickSafeButton>
 				</div>
-				<Button type="submit" className="cursor-pointer" size="icon" aria-label="Send message" disabled>
+				<ClickSafeButton
+					type="submit"
+					className="cursor-pointer"
+					size="icon"
+					aria-label="Send message"
+					disabled={!message.trim()}
+				>
 					<ArrowUp />
-				</Button>
+				</ClickSafeButton>
 			</div>
 		</form>
 	);

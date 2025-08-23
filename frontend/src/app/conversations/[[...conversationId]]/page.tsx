@@ -5,7 +5,7 @@ interface ConversationsPageProps {
 	params: Promise<{ conversationId?: string[] }>;
 }
 
-export default async function ConversationsPage({ params }: ConversationsPageProps) {
+export default async function ConversationsIDPage({ params }: ConversationsPageProps) {
 	const { conversationId } = await params;
 
 	return (

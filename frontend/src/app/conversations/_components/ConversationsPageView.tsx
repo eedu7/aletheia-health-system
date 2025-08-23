@@ -6,9 +6,5 @@ interface ConversationsPageViewProps {
 }
 
 export const ConversationsPageView = ({ conversationId }: ConversationsPageViewProps) => {
-	if (conversationId === "new") {
-		return <PromptInput />;
-	}
-
 	return <div>ConversationsPageView</div>;
 };

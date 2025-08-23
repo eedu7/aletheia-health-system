@@ -1,7 +1,6 @@
 "use client";
 
-import { QueryClient } from "@tanstack/query-core";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createUserConversation, getAllUserConversations, getConversationById } from "@/lib/api/conversation";
 
 interface useConversationProps {
@@ -10,7 +9,7 @@ interface useConversationProps {
 
 export function useConversation(props?: useConversationProps) {
 	const conversationId = props?.conversationId;
-	const queryClient = new QueryClient();
+	const queryClient = useQueryClient();
 
 	const userAllConversations = useQuery({
 		queryKey: ["conversations", "userAllConversations"],
