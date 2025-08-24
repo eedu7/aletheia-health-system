@@ -3,8 +3,8 @@
 import { Edit, Search } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { ConversationSidebarFooterNavUser } from "@/app/conversations/_components/ConversationSidebarFooterNavUser";
 import { ConversationsSidebarHeader } from "@/app/conversations/_components/ConversationsSidebarHeader";
+import { SidebarFooterNavUser } from "@/app/conversations/_components/SidebarFooterNavUser";
 import { SidebarGroupUserConversations } from "@/app/conversations/_components/SidebarGroupUserConversations";
 import { ToolTipWrapper } from "@/components/ToolTipWrapper";
 import {
@@ -54,7 +54,7 @@ export const ConversationsSidebar = () => {
 				<SidebarGroupUserConversations />
 			</SidebarContent>
 			<SidebarFooter>
-				<ConversationSidebarFooterNavUser />
+				<SidebarFooterNavUser />
 			</SidebarFooter>
 		</Sidebar>
 	);

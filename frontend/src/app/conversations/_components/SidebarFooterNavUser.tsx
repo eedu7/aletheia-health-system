@@ -14,7 +14,7 @@ import {
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { useAuth } from "@/hooks/api/useAuth";
 
-export function ConversationSidebarFooterNavUser() {
+export function SidebarFooterNavUser() {
 	const { signOut, user } = useAuth();
 
 	return (
