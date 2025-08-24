@@ -30,6 +30,7 @@ export const ConversationsPageView = ({ conversationId }: ConversationsPageViewP
 					</ul>
 				</ScrollArea>
 				<div className="mt-1 flex w-full items-center justify-center">
+					{/* TODO: Add a button to send a message */}
 					<PromptInput
 						onSubmit={(value: string) => {
 							console.log(value);

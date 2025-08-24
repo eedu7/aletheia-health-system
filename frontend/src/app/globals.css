@@ -136,5 +136,5 @@
 }
 
 .animate-slide-in {
-    animation: slide-in 0.2s ease-out 0.2s forwards; /* 1s delay */
+    animation: slide-in 0.2s ease-out 0.2s forwards;
 }

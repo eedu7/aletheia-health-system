@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUp, Plus, Settings2 } from "lucide-react";
+import { ArrowUp, Loader2, Plus, Settings2 } from "lucide-react";
 import React, { useRef, useState } from "react";
 import { ClickSafeButton } from "@/app/conversations/_components/ClickSafeButton";
 import { Textarea } from "@/components/ui/textarea";
@@ -58,6 +58,7 @@ export const PromptInput = ({ onSubmit, className, disabled }: PromptInputProps)
 						<Settings2 />
 					</ClickSafeButton>
 				</div>
+
 				<ClickSafeButton
 					type="submit"
 					className="cursor-pointer"
@@ -65,7 +66,7 @@ export const PromptInput = ({ onSubmit, className, disabled }: PromptInputProps)
 					aria-label="Send message"
 					disabled={!message.trim() || disabled}
 				>
-					<ArrowUp />
+					{disabled ? <Loader2 className="repeat-infinite animate-spin" /> : <ArrowUp />}
 				</ClickSafeButton>
 			</div>
 		</form>
