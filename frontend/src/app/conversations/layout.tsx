@@ -6,7 +6,7 @@ export default function ConversationsLayout({ children }: { children: React.Reac
 	return (
 		<SidebarProvider>
 			<ConversationsSidebar />
-			<main className="w-full">{children}</main>
+			<main className="w-full px-2">{children}</main>
 		</SidebarProvider>
 	);
 }
