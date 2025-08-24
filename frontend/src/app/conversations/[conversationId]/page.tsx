@@ -1,9 +1,16 @@
+import { Metadata } from "next";
 import React from "react";
 import { ConversationsPageView } from "@/app/conversations/_components/ConversationsPageView";
 
 interface ConversationsPageProps {
 	params: Promise<{ conversationId: string }>;
 }
+
+export const metadata: Metadata = {
+	title: "Conversation - Aletheia Health",
+	description: "Conversation",
+	keywords: ["conversation"],
+};
 
 export default async function ConversationsIDPage({ params }: ConversationsPageProps) {
 	const { conversationId } = await params;
