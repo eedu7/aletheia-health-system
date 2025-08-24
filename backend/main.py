@@ -12,8 +12,8 @@ def main() -> None:
         "--port",
         "-p",
         type=int,
-        default=8000,
-        help="Port to run the server on (default: 8000).",
+        default=8080,
+        help="Port to run the server on (default: 8080).",
     )
 
     parser.add_argument(
