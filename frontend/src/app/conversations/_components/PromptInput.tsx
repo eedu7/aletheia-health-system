@@ -8,10 +8,11 @@ import { cn } from "@/lib/utils";
 
 interface PromptInputProps {
 	onSubmit: (value: string) => void;
+	disabled?: boolean;
 	className?: string;
 }
 
-export const PromptInput = ({ onSubmit, className }: PromptInputProps) => {
+export const PromptInput = ({ onSubmit, className, disabled }: PromptInputProps) => {
 	const [message, setMessage] = useState("");
 	const promptRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -32,7 +33,10 @@ export const PromptInput = ({ onSubmit, className }: PromptInputProps) => {
 
 	return (
 		<form
-			className={cn("grid w-full max-w-2xl cursor-text rounded-xl border p-4 shadow", className)}
+			className={cn(
+				"grid w-full max-w-4xl min-w-[280px] cursor-text rounded-xl border p-2 shadow md:min-w-xl lg:min-w-2xl",
+				className,
+			)}
 			onClick={() => promptRef.current?.focus()}
 			onSubmit={handleSubmit}
 		>
@@ -44,7 +48,7 @@ export const PromptInput = ({ onSubmit, className }: PromptInputProps) => {
 				onChange={(e) => setMessage(e.target.value)}
 				placeholder="Type your message..."
 			/>
-			<div className="flex items-center justify-between">
+			<div className="flex items-center justify-between px-3">
 				{/*TODO: Make these buttons work and do something*/}
 				<div className="space-x-2">
 					<ClickSafeButton type="button" size="icon" variant="outline" className="cursor-pointer" disabled>
@@ -59,7 +63,7 @@ export const PromptInput = ({ onSubmit, className }: PromptInputProps) => {
 					className="cursor-pointer"
 					size="icon"
 					aria-label="Send message"
-					disabled={!message.trim()}
+					disabled={!message.trim() || disabled}
 				>
 					<ArrowUp />
 				</ClickSafeButton>
