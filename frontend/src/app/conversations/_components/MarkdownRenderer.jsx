@@ -4,11 +4,7 @@ import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-interface MarkdownRendererProps {
-	content: string;
-}
-
-export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
+export const MarkdownRenderer = ({ content }) => {
 	return (
 		<div className="prose prose-neutral max-w-none">
 			<ReactMarkdown
