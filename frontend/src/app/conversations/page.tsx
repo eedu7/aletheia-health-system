@@ -6,6 +6,8 @@ import { PromptInput } from "@/app/conversations/_components/PromptInput";
 import { useConversation } from "@/hooks/api/useConversation";
 import { useMessage } from "@/hooks/api/useMessage";
 
+// TODO: Add metadata
+
 export default function ConversationPage() {
 	const { createConversation } = useConversation();
 	const { createMessage } = useMessage();

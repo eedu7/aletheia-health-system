@@ -5,7 +5,7 @@ import { ConversationsPageView } from "@/app/conversations/_components/Conversat
 interface ConversationsPageProps {
 	params: Promise<{ conversationId: string }>;
 }
-
+// TODO: Generate metadata, server side rendering
 export const metadata: Metadata = {
 	title: "Conversation - Aletheia Health",
 	description: "Conversation",
