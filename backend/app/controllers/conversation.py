@@ -40,8 +40,13 @@ class ConversationController(BaseController[Conversation]):
         except Exception as exception:
             raise BadRequestException("Error in create conversation: " + str(exception))
 
-    async def get_conversation_by_id(self, conversation_id: UUID) -> Conversation | None:
-        return await self.get_by_id(conversation_id)
+    async def get_conversation_by_id(self, conversation_id: UUID) -> ConversationResponse:
+        conversation = await self.get_by_id(conversation_id)
+
+        if not conversation:
+            raise NotFoundException(f"Conversation with id '{conversation_id}' not found.")
+
+        return ConversationResponse.model_validate(conversation)
 
     async def get_user_conversations(
         self, user_id: UUID, skip: int = 0, limit: int = 10

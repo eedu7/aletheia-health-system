@@ -47,7 +47,7 @@ async def get_all_user_conversations(
 async def get_conversation(
     conversation_id: UUID,
     conversation_controller: ConversationController = Depends(Factory().get_conversation_controller),
-):
+) -> ConversationResponse:
     return await conversation_controller.get_conversation_by_id(conversation_id)
 
 
