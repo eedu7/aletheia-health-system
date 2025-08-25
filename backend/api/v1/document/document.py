@@ -1,9 +1,9 @@
 import os
 from pathlib import Path
 from typing import List
-from uuid import UUID
+from uuid import UUID, uuid4
 
-from fastapi import APIRouter, Depends, File, UploadFile
+from fastapi import APIRouter, Depends, File, Form, UploadFile
 from pydantic import BaseModel, Field
 
 from core.dependencies.authentication import AuthenticationRequired
@@ -19,13 +19,13 @@ class DocumentUploadRequest(BaseModel):
 
 
 @router.post("/upload")
-async def upload_document(request_body: DocumentUploadRequest, files: List[UploadFile] = File(...)):
+async def upload_document(conversation_id: UUID = Form(...), files: List[UploadFile] = File(...)):
     saved_files = []
 
     for file in files:
         ext = os.path.splitext(file.filename)[1]
 
-        filename = f"{uuid.uuid4().hex}{ext}"
+        filename = f"{uuid4().hex}{ext}"
         file_path = os.path.join(UPLOAD_DIR, filename)
 
         with open(file_path, "wb") as buffer:
@@ -33,4 +33,4 @@ async def upload_document(request_body: DocumentUploadRequest, files: List[Uploa
 
         saved_files.append({"filename": file.filename, "url": f"{UPLOAD_DIR}/{filename}"})
 
-    return {"files": saved_files, "document": request_body}
+    return {"files": saved_files, "document": conversation_id}
