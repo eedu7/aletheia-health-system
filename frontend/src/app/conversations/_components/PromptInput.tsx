@@ -5,6 +5,7 @@ import React, { useRef, useState } from "react";
 import { ClickSafeButton } from "@/app/conversations/_components/ClickSafeButton";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { UploadFile } from "./UploadFile";
 
 interface PromptInputProps {
 	onSubmit: (value: string) => void;
@@ -50,13 +51,14 @@ export const PromptInput = ({ onSubmit, className, disabled }: PromptInputProps)
 			/>
 			<div className="flex items-center justify-between px-3">
 				{/*TODO: Make these buttons work and do something*/}
-				<div className="space-x-2">
-					<ClickSafeButton type="button" size="icon" variant="outline" className="cursor-pointer" disabled>
+				<div className="flex items-center gap-2">
+					<ClickSafeButton type="button" size="icon" variant="ghost" className="cursor-pointer" disabled>
 						<Plus />
 					</ClickSafeButton>
-					<ClickSafeButton type="button" size="icon" variant="outline" className="cursor-pointer" disabled>
+					<ClickSafeButton type="button" size="icon" variant="ghost" className="cursor-pointer" disabled>
 						<Settings2 />
 					</ClickSafeButton>
+					<UploadFile />
 				</div>
 
 				<ClickSafeButton
