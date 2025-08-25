@@ -33,7 +33,7 @@ class AuthController(BaseController[User]):
         if not new_user:
             raise BadRequestException("Failed to create user.")
 
-        token = JWTHandler.create_token(new_user)
+        token = JWTHandler.create_token(user=new_user)
 
         return AuthResponse(user=UserResponse.model_validate(new_user), token=token)
 
@@ -42,5 +42,5 @@ class AuthController(BaseController[User]):
 
         if not user or not PasswordHandler.verify_password(password=password, hashed_password=str(user.password)):
             raise BadRequestException("Invalid credentials.")
-        token = JWTHandler.create_token(user)
+        token = JWTHandler.create_token(user=user)
         return AuthResponse(user=UserResponse.model_validate(user), token=token)

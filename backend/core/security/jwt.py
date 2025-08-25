@@ -44,7 +44,7 @@ class JWTHandler:
 
         expire = get_timestamp(minutes=expire_minutes)
         iat = get_timestamp()
-        jwt_payload = {"iat": iat, "exp": expire, "token_type": token_type.value, **payload}
+        jwt_payload = {"iat": iat, "exp": expire, "token_type": token_type, "user": {**payload}}
         return jwt.encode(jwt_payload, cls.secret_key, algorithm=cls.algorithm)
 
     @classmethod

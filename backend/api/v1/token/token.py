@@ -2,7 +2,6 @@ from fastapi import APIRouter, Request, status
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
-from app.models.user import User
 from app.schemas.extra import Token, TokenType
 from core.exceptions.base import BadRequestException, UnauthorizedException
 from core.security.jwt import JWTHandler
@@ -51,13 +50,13 @@ async def refresh_token(request: Request, request_data: RefreshToken) -> Token:
         if payload.get("token_type") != "refresh":
             raise BadRequestException("Invalid token type")
 
-        user = User(
-            id=payload["user"]["sub"],
-            email=payload["user"]["email"],
-            full_name=payload["user"]["full_name"],
-        )
+        payload = {
+            "id": payload["user"]["sub"],
+            "email": payload["user"]["email"],
+            "full_name": payload["user"]["name"],
+        }
 
-        return JWTHandler.create_token(user)
+        return JWTHandler.create_token(payload=payload)
 
-    except Exception:
-        raise BadRequestException("Invalid refresh token")
+    except Exception as e:
+        raise BadRequestException(f"Invalid refresh token: {e}")
