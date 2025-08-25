@@ -39,6 +39,7 @@ export default function FileUpload({
 	const { upload } = useDocument(conversationId);
 
 	const handleUpload = () => {
+		// TODO: Error Handling
 		if (files.length === 0) return;
 		upload.mutate(files.map((f) => f.file) as File[], {
 			onSuccess: () => {
