@@ -1,10 +1,18 @@
 "use client";
 
-import { AlertCircleIcon, ImageIcon, UploadIcon, XIcon } from "lucide-react";
+import { AlertCircleIcon, ImageIcon, Loader2, UploadIcon, XIcon } from "lucide-react";
+import Image from "next/image";
+import { useDocument } from "@/hooks/api/useDocument";
 import { formatBytes, useFileUpload } from "@/hooks/use-file-upload";
 import { Button } from "./ui/button";
 
-export default function FileUpload() {
+export default function FileUpload({
+	conversationId,
+	toggleDialog,
+}: {
+	conversationId: string;
+	toggleDialog: () => void;
+}) {
 	const maxSizeMB = 5;
 	const maxSize = maxSizeMB * 1024 * 1024; // 5MB default
 	const maxFiles = 6;
@@ -27,6 +35,21 @@ export default function FileUpload() {
 		multiple: true,
 		maxFiles,
 	});
+
+	const { upload } = useDocument(conversationId);
+
+	const handleUpload = () => {
+		if (files.length === 0) return;
+		upload.mutate(files.map((f) => f.file) as File[], {
+			onSuccess: () => {
+				clearFiles();
+				toggleDialog();
+			},
+			onError: () => {
+				console.error("Upload failed");
+			},
+		});
+	};
 
 	return (
 		<div className="flex flex-col gap-2">
@@ -74,9 +97,11 @@ export default function FileUpload() {
 						>
 							<div className="flex items-center gap-3 overflow-hidden">
 								<div className="bg-accent aspect-square shrink-0 rounded">
-									<img
+									<Image
 										src={file.preview ?? ""}
 										alt={file.file.name}
+										width={40}
+										height={40}
 										className="size-10 rounded-[inherit] object-cover"
 									/>
 								</div>
@@ -109,7 +134,24 @@ export default function FileUpload() {
 				</div>
 			)}
 			<div>
-				<Button size="sm" className="mt-2"></Button>
+				<Button
+					size="sm"
+					className="mt-2 w-full"
+					onClick={handleUpload}
+					disabled={files.length === 0 || upload.isPending}
+				>
+					{upload.isPending ? (
+						<div className="flex items-center gap-2">
+							<Loader2 className="repeat-infinite animate-spin" />
+							<span>
+								Uploading
+								<span>...</span>
+							</span>
+						</div>
+					) : (
+						"Upload"
+					)}
+				</Button>
 			</div>
 		</div>
 	);

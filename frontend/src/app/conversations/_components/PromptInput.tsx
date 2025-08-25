@@ -11,9 +11,10 @@ interface PromptInputProps {
 	onSubmit: (value: string) => void;
 	disabled?: boolean;
 	className?: string;
+	conversationId?: string;
 }
 
-export const PromptInput = ({ onSubmit, className, disabled }: PromptInputProps) => {
+export const PromptInput = ({ onSubmit, className, disabled, conversationId }: PromptInputProps) => {
 	const [message, setMessage] = useState("");
 	const promptRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -58,7 +59,7 @@ export const PromptInput = ({ onSubmit, className, disabled }: PromptInputProps)
 					<ClickSafeButton type="button" size="icon" variant="ghost" className="cursor-pointer" disabled>
 						<Settings2 />
 					</ClickSafeButton>
-					<DialogUploadFile />
+					{conversationId && <DialogUploadFile conversationId={conversationId} />}
 				</div>
 
 				<ClickSafeButton

@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import FileUpload from "@/components/FileUpload";
 import {
 	Dialog,
@@ -9,9 +12,15 @@ import {
 } from "@/components/ui/dialog";
 import { ClickSafeButton } from "./ClickSafeButton";
 
-export const DialogUploadFile = () => {
+export const DialogUploadFile = ({ conversationId }: { conversationId: string }) => {
+	const [open, setOpen] = useState(false);
+
+	const toggleDialog = () => {
+		setOpen((prev) => !prev);
+	};
+
 	return (
-		<Dialog>
+		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
 				<ClickSafeButton variant="ghost" type="button" className="">
 					Upload File
@@ -23,7 +32,7 @@ export const DialogUploadFile = () => {
 					<DialogDescription>Choose a file to upload from your device.</DialogDescription>
 				</DialogHeader>
 				<div>
-					<FileUpload />
+					<FileUpload toggleDialog={toggleDialog} conversationId={conversationId} />
 				</div>
 			</DialogContent>
 		</Dialog>

@@ -6,6 +6,10 @@ export async function uploadDocument(conversationId: string, files: File[]) {
 	files.forEach((file) => formData.append("files", file));
 	formData.append("conversation_id", conversationId);
 
-	const res = await api.post("/v1/document/upload", formData);
+	const res = await api.post("/v1/document/upload", formData, {
+		headers: {
+			"Content-Type": "multipart/form-data",
+		},
+	});
 	return res.data;
 }

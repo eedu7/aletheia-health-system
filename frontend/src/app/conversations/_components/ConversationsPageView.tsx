@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChatFeatures } from "@/app/conversations/_components/ChatFeatures";
 import { MarkdownRenderer } from "@/app/conversations/_components/MarkdownRenderer";
 import { PromptInput } from "@/app/conversations/_components/PromptInput";
@@ -87,7 +87,11 @@ export const ConversationsPageView = ({ conversationId }: ConversationsPageViewP
 				</div>
 
 				<div className="mt-1 flex w-full items-center gap-2">
-					<PromptInput disabled={createMessage.isPending} onSubmit={onSubmit} />
+					<PromptInput
+						conversationId={conversationId}
+						disabled={createMessage.isPending}
+						onSubmit={onSubmit}
+					/>
 				</div>
 			</div>
 		</main>
