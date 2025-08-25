@@ -5,7 +5,7 @@ import React, { useRef, useState } from "react";
 import { ClickSafeButton } from "@/app/conversations/_components/ClickSafeButton";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { UploadFile } from "./UploadFile";
+import { DialogUploadFile } from "./DialogUploadFile";
 
 interface PromptInputProps {
 	onSubmit: (value: string) => void;
@@ -58,7 +58,7 @@ export const PromptInput = ({ onSubmit, className, disabled }: PromptInputProps)
 					<ClickSafeButton type="button" size="icon" variant="ghost" className="cursor-pointer" disabled>
 						<Settings2 />
 					</ClickSafeButton>
-					<UploadFile />
+					<DialogUploadFile />
 				</div>
 
 				<ClickSafeButton
