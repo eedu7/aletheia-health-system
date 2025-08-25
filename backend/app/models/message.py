@@ -14,14 +14,18 @@ from core.database.mixins import TimestampMixin
 class Message(Base, TimestampMixin):
     __tablename__ = "messages"
 
-    id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    id: Mapped[UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid4
+    )
     conversation_id: Mapped[UUID] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("conversations.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
     )
-    sender: Mapped[SenderType] = mapped_column(Enum(SenderType), nullable=False, default=SenderType.USER.value)
+    sender: Mapped[SenderType] = mapped_column(
+        Enum(SenderType), nullable=False, default=SenderType.USER.value
+    )
     content: Mapped[str] = mapped_column(UnicodeText, nullable=False)
 
     conversation: Mapped["Conversation"] = relationship(back_populates="messages")  # type: ignore

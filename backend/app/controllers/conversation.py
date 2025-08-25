@@ -6,7 +6,10 @@ from sqlalchemy.exc import IntegrityError
 from app.models import Conversation
 from app.repositories import ConversationRepository
 from app.schemas.extra.pagination import PaginatedResponse
-from app.schemas.responses.conversation import ConversationResponse, CreateConversationResponse
+from app.schemas.responses.conversation import (
+    ConversationResponse,
+    CreateConversationResponse,
+)
 from core.controller import BaseController
 from core.exceptions import BadRequestException, NotFoundException
 
@@ -16,7 +19,9 @@ class ConversationController(BaseController[Conversation]):
         super().__init__(model=Conversation, repository=conversation_repository)
         self.conversation_repository = conversation_repository
 
-    async def create_conversation(self, user_id: UUID, title: str) -> CreateConversationResponse:
+    async def create_conversation(
+        self, user_id: UUID, title: str
+    ) -> CreateConversationResponse:
         try:
             conversation: Conversation | None = await self.create(
                 {
@@ -34,17 +39,25 @@ class ConversationController(BaseController[Conversation]):
             orig = getattr(exc, "orig", None)
 
             if isinstance(orig, ForeignKeyViolation):
-                raise NotFoundException(f"User with id '{user_id}' does not exist.") from exc
-            raise BadRequestException("Integrity error while creating conversation") from exc
+                raise NotFoundException(
+                    f"User with id '{user_id}' does not exist."
+                ) from exc
+            raise BadRequestException(
+                "Integrity error while creating conversation"
+            ) from exc
 
         except Exception as exception:
             raise BadRequestException("Error in create conversation: " + str(exception))
 
-    async def get_conversation_by_id(self, conversation_id: UUID) -> ConversationResponse:
+    async def get_conversation_by_id(
+        self, conversation_id: UUID
+    ) -> ConversationResponse:
         conversation = await self.get_by_id(conversation_id)
 
         if not conversation:
-            raise NotFoundException(f"Conversation with id '{conversation_id}' not found.")
+            raise NotFoundException(
+                f"Conversation with id '{conversation_id}' not found."
+            )
 
         return ConversationResponse.model_validate(conversation)
 
@@ -55,7 +68,9 @@ class ConversationController(BaseController[Conversation]):
             (
                 conversations,
                 total,
-            ) = await self.conversation_repository.get_user_conversations(user_id, skip, limit)
+            ) = await self.conversation_repository.get_user_conversations(
+                user_id, skip, limit
+            )
             return PaginatedResponse(
                 items=[ConversationResponse.model_validate(c) for c in conversations],
                 total=total,
@@ -67,7 +82,9 @@ class ConversationController(BaseController[Conversation]):
 
             if isinstance(orig, ForeignKeyViolation):
                 raise NotFoundException(f"User with id '{user_id}' not found") from exc
-            raise BadRequestException("Integrity error while creating conversation") from exc
+            raise BadRequestException(
+                "Integrity error while creating conversation"
+            ) from exc
         except Exception as exc:
             raise BadRequestException(f"Error in fetching conversations: {exc}")
 
