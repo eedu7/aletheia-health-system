@@ -20,9 +20,7 @@ class BaseConfig(BaseSettings):
 
 class Config(BaseConfig):
     ENVIRONMENT: str = EnvironmentType.DEVELOPMENT
-    DATABASE_URL: PostgresDsn | str = (
-        "postgresql+asyncpg://postgres:postgres@localhost:5432/aletheia-health-system-db"
-    )
+    DATABASE_URL: PostgresDsn | str = "postgresql+asyncpg://postgres:postgres@localhost:5432/aletheia-health-system-db"
     TEST_DATABASE_URL: PostgresDsn | str = (
         "postgresql://postgres:postgres@localhost:5434/aletheia-health-system-test-db"
     )
