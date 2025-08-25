@@ -14,7 +14,7 @@ from core.security import JWTHandler
 class AuthBackend(AuthenticationBackend):
     async def authenticate(self, conn: HTTPConnection) -> Tuple[bool, CurrentUser]:
         current_user = CurrentUser()  # type: ignore
-        authorization: str = conn.headers.get("Authorization")
+        authorization: str | None = conn.headers.get("Authorization")
 
         try:
             if authorization:
@@ -34,7 +34,7 @@ class AuthBackend(AuthenticationBackend):
 
         try:
             payload = JWTHandler.decode(token)
-            current_user.id = payload.get("sub")
+            current_user.id = payload["user"]["sub"]
             return True, current_user
         except JWTError:
             return False, current_user

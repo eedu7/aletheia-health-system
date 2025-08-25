@@ -26,12 +26,18 @@ class BaseController(Generic[ModelType]):
         :return: The model instance.
         """
 
-        db_obj = await self.repository.get_by(field="id", value=uuid, join_=join_, unique=True)
+        db_obj = await self.repository.get_by(
+            field="id", value=uuid, join_=join_, unique=True
+        )
         if not db_obj:
-            raise NotFoundException(f"{self.model_class.__tablename__.title()} with id: {uuid} does not exist")
+            raise NotFoundException(
+                f"{self.model_class.__tablename__.title()} with id: {uuid} does not exist"
+            )
         return db_obj
 
-    async def get_all(self, skip: int = 0, limit: int = 100, join_: set[str] | None = None) -> list[ModelType]:
+    async def get_all(
+        self, skip: int = 0, limit: int = 100, join_: set[str] | None = None
+    ) -> list[ModelType]:
         """
         Returns a list of records based on pagination params.
 
@@ -65,7 +71,9 @@ class BaseController(Generic[ModelType]):
         await self.repository.delete(model)
 
     @staticmethod
-    async def extract_attributes_from_schema(schema: BaseModel, excludes: set | None = None) -> dict[str, Any]:
+    async def extract_attributes_from_schema(
+        schema: BaseModel, excludes: set | None = None
+    ) -> dict[str, Any]:
         """
         Extracts the attributes from the schema.
 

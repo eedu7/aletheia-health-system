@@ -90,6 +90,4 @@ class Cookie:
             key=TokenType.ACCESS_TOKEN,
             samesite=access_samesite,
         )
-        self.delete_cookie(
-            response, key=TokenType.REFRESH_TOKEN, samesite=refresh_samesite
-        )
+        self.delete_cookie(response, key=TokenType.REFRESH_TOKEN, samesite=refresh_samesite)

@@ -14,7 +14,9 @@ class MessageController(BaseController[Message]):
         super().__init__(model=Message, repository=message_repository)
         self.message_repository = message_repository
 
-    async def create_message(self, conversation_id: UUID, content: str, ollama_client: OllamaClient) -> MessageResponse:
+    async def create_message(
+        self, conversation_id: UUID, content: str, ollama_client: OllamaClient
+    ) -> MessageResponse:
         await self.create(
             {
                 "conversation_id": conversation_id,

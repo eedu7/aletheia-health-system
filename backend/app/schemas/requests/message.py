@@ -9,4 +9,6 @@ class MessageCreateRequest(BaseModel):
         description="Conversation ID",
         examples=["3fa85f64-5717-4562-b3fc-2c963f66afa6"],
     )
-    content: str = Field(..., description="Message content", examples=["Hello, how are you?"])
+    content: str = Field(
+        ..., description="Message content", examples=["Hello, how are you?"]
+    )
